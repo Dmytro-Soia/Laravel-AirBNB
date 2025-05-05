@@ -1,4 +1,38 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+@theme {
+    --color-pearl-bush-50: #faf6f2;
+    --color-pearl-bush-100: #f4ebe0;
+    --color-pearl-bush-200: #ede0d0;
+    --color-pearl-bush-300: #d8ba99;
+    --color-pearl-bush-400: #c79870;
+    --color-pearl-bush-500: #bb8054;
+    --color-pearl-bush-600: #ae6d48;
+    --color-pearl-bush-700: #91573d;
+    --color-pearl-bush-800: #754737;
+    --color-pearl-bush-900: #5f3c2f;
+    --color-pearl-bush-950: #331d17;
+
+
+    --font-playfair: "Playfair Display", serif;
+    --color-cognac-50: #fff8eb;
+    --color-cognac-100: #fff0cf;
+    --color-cognac-200: #ffdb9f;
+    --color-cognac-300: #ffbf62;
+    --color-cognac-400: #ff9623;
+    --color-cognac-500: #ff7600;
+    --color-cognac-600: #ff5700;
+    --color-cognac-700: #da3e00;
+    --color-cognac-800: #9f2d00;
+    --color-cognac-900: #8a2a04;
+    --color-cognac-950: #4b1100;
+
+    --color-placeholders: #808080;
+    --color-border-grey: rgb(221, 221, 221);
+
+    --shadow-block: 0px 5px 16px 10px rgba(0, 0, 0, 0.1);
+}
+@source "../views";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
