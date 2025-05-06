@@ -47,6 +47,15 @@
         </div>
     </div>
 </nav>
+@if ($errors->any())
+    <div class="flex flex-col px-8 py-6 pt-60 bg-cognac-700 ">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class=" h-screen @if(request()->is("/")) pt-35  @else pt-24 @endif px-12">{{ $slot }}</div>
 <script src="https://flowbite.com/docs/flowbite.min.js"></script>
 </body>
