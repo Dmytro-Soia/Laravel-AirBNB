@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function apartments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Apartment::class);
+        return $this->hasMany(Apartment::class, 'owner_id');
     }
 }
