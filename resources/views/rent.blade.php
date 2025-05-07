@@ -3,7 +3,8 @@
         Rent a house
     </x-slot:title>
     <div class="w-3/4 h-full m-auto place-content-center">
-        <form class="grid xl:grid-cols-2 md:grid-cols-1 md:mt-10 md:gap-10 xl:gap-0 px-6 py-4 mb-24">
+        <form action="{{ route('create') }}" method="post" enctype="multipart/form-data" class="grid xl:grid-cols-2 md:grid-cols-1 md:mt-10 md:gap-10 xl:gap-0 px-6 py-4 mb-24">
+            @csrf
             <div class="bg-pearl-bush-200 rounded-tl-2xl p-8 w-full">
                 <h1 class="text-4xl font-bold mb-6 text-center">
                     Rent your house!</h1>
@@ -12,14 +13,14 @@
                            placeholder="Name apartment"
                            class="border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 border-1 rounded p-3"
                            required>
-                    <textarea name="content"
-                              placeholder="Content"
+                    <textarea name="description"
+                              placeholder="Description"
                               class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 resize-none"
-                              rows="4"></textarea>
+                              rows="4" required></textarea>
                     <input type="number" name="rooms" id="rooms" min="1" placeholder="Rooms"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
                            required>
-                    <input type="number" name="peoples" id="peoples"
+                    <input type="number" name="max_people" id="peoples"
                            min="1" placeholder="Max people"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
                            required>
@@ -27,7 +28,7 @@
                            placeholder="Price"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
                            required>
-                    <input type="file" name="photo" id="photo"
+                    <input type="file" name="photos[]" id="photo"
                            class="border-1 rounded p-3 bg-white border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 text-placeholders"
                            multiple required>
                 </div>
@@ -35,18 +36,73 @@
             <div class="bg-pearl-bush-200 p-8 rounded-tr-2xl w-full">
                 <h1 class="text-4xl font-bold mb-6 text-center">
                     Choose location</h1>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21959.20473994736!2d6.631473949999999!3d46.5298689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sch!4v1746184541484!5m2!1sen!2sch"
-                    class="rounded-3xl w-full h-113" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                <div id="map" class="h-117 hover:ring-2 hover:ring-cognac-800 transition-all rounded-2xl"></div>
+                <input type="hidden" name="latitude" id="latitude" required>
+                <input type="hidden" name="longitude" id="longitude" required>
+                <input type="hidden" name="address" id="address" required>
             </div>
+
             <div class="md:col-span-1 xl:col-span-2">
-                <button type="submit"
-                        class="w-full h-15 bg-cognac-800 text-white p-3 rounded-b-2xl font-semibold hover:bg-cognac-900 transition">
+                <button type="submit" class="w-full h-15 bg-cognac-800 text-white p-3 rounded-b-2xl font-semibold hover:bg-cognac-900 transition">
                     Confirm
                 </button>
             </div>
         </form>
     </div>
+
+    <script>
+        window.onload = function() {
+            const script = document.createElement("script");
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA92P9gHjSCaDHRPBe42bR6xGsQJx4toBM&libraries=places&callback=initMap";
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        };
+    </script>
+    <script>
+        function initMap() {
+            const initialLocation = { lat: 46.525426156486844, lng: 6.624099571477695 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: initialLocation,
+                zoom: 10,
+            });
+
+            let marker = new google.maps.Marker({
+                position: initialLocation,
+                map: map,
+                draggable: true,
+            });
+
+            const geocoder = new google.maps.Geocoder();
+
+            map.addListener("click", (event) => {
+                const latLng = event.latLng;
+                marker.setPosition(latLng);
+                updateLocationFields(latLng, geocoder);
+            });
+
+            marker.addListener("dragend", () => {
+                updateLocationFields(marker.getPosition(), geocoder);
+            });
+
+            function updateLocationFields(location, geocoder) {
+                const lat = location.lat();
+                const lng = location.lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                geocoder.geocode({ location: location }, (results, status) => {
+                    if (status === "OK" && results[0]) {
+                        const address = results[0].formatted_address;
+                        document.getElementById("address").value = address;
+                        console.log("Address:", address);
+                    } else {
+                        console.error("Geocoder failed:", status);
+                    }
+                });
+            }
+
+            updateLocationFields(initialLocation, geocoder);
+        }
+    </script>
 </x-layout>
