@@ -53,7 +53,7 @@
     <script>
         window.onload = function() {
             const script = document.createElement("script");
-            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA92P9gHjSCaDHRPBe42bR6xGsQJx4toBM&libraries=places&callback=initMap";
+            script.src = "https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=places&callback=initMap";
             script.async = true;
             script.defer = true;
             document.head.appendChild(script);
