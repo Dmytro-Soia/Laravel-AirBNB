@@ -10,6 +10,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Apartment extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'rooms',
+        'max_people',
+        'price',
+        'country',
+        'city',
+        'street',
+        'lon',
+        'lat',
+    ];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -17,5 +31,10 @@ class Apartment extends Model
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class, 'apartment_id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomePageController::class, 'index'])->name('home');
 
 Route::get('login', function () {
     return view('login');
@@ -30,3 +30,13 @@ Route::get('edit', function() {
 Route::post('register', [UserController::class, 'authenticate'])->name('registered');
 
 Route::post('login', [UserController::class, 'login'])->name('authorised');
+
+Route::post('rent', [ApartmentController::class, 'create'])->name('create');
+
+Route::get('detail/{id}', [ApartmentController::class, 'detail']);
+
+Route::post('delete/{id}', [ApartmentController::class, 'delete']);
+
+Route::get('edit/{id}', [ApartmentController::class, 'edit_index']);
+
+Route::post('edit/{id}', [ApartmentController::class, 'edit']);

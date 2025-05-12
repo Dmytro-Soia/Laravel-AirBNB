@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Apartment;
 use App\Models\Booking;
+use App\Models\Image;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\ImageFactory;
 use Illuminate\Database\Seeder;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,22 +18,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()
-            ->count(3)
-            ->has(Apartment::factory()
-                ->count(5))
-            ->create();
+        User::factory([
+            'email' => 'test@test.com',
+            'password' => 'password',
+        ])->create();
 
-        $users = User::all();
-        $apartments = Apartment::all();
-
-        $users->each(function ($user) use ($apartments) {
-            Booking::factory()
-                ->for($user, 'tenant')
-                ->for($apartments->random(), 'apartment')
-                ->create();
-        });
+//        User::factory()
+//            ->count(15)
+//            ->has(Apartment::factory()
+//                ->has(Image::factory()->count(3))
+//                ->count(5))
+//            ->create();
+//
+//        $users = User::all();
+//        $apartments = Apartment::all();
+//
+//        $users->each(function ($user) use ($apartments) {
+//            Booking::factory()
+//                ->for($user, 'tenant')
+//                ->for($apartments->random(), 'apartment')
+//                ->create();
+//        });
     }
 }
