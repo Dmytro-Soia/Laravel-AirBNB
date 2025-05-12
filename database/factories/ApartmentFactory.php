@@ -20,11 +20,10 @@ class ApartmentFactory extends Factory
     {
             return [
                 'title' => fake()->name,
-                'description' => fake()->sentence(),
-                'photos' => fake()->name . '.jpg',
-                'rooms' => 12,
-                'max_people' => 12,
-                'price' => 12,
+                'description' => fake()->sentence(20),
+                'rooms' => fake()->numberBetween(1,5),
+                'max_people' => fake()->numberBetween(2, 10),
+                'price' => fake()->numberBetween(100, 1000),
                 'country' => fake()->country,
                 'city' => fake()->city,
                 'street' => fake()->address,
