@@ -62,14 +62,14 @@ class ApartmentController extends Controller
 
     public function detail($id)
     {
-        $chosenApartment = Apartment::where('id',$id)->with('images')->first();
+        $chosenApartment = Apartment::where('id',$id)->with('images')->firstOrFail();
 
         return view('details', ['apartment' => $chosenApartment]);
     }
 
     public function delete($id)
     {
-        $containedImages = Image::all()->where('apartment_id', $id);
+        $containedImages = Image::where('apartment_id', $id)->get();
         foreach($containedImages as $image)
         {
             Storage::disk('public')->delete('images/' . $image->path);
@@ -127,8 +127,8 @@ class ApartmentController extends Controller
         foreach($apartToEdit->images as $image)
         {
             Storage::disk('public')->delete('images/' . $image->path);
-            $apartToEdit->images()->delete();
         }
+        $apartToEdit->images()->delete();
         foreach ($request->file('photos') as $photo)
         {
             $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
