@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -25,29 +27,32 @@ class ApartmentController extends Controller
         $address = $request->input('address');
         $address = str_replace(', ', ',', $address);
         $address = explode(',', $address);
+        $city = explode(' ', $address[1]);
 
-        $photoNames = [];
-        foreach ($request->file('photos') as $photo)
-        {
-            $photoName = bin2hex(random_bytes(10)) . '.' . $photo->getClientOriginalExtension();
-            $photoNames[] = $photoName;
-            Storage::disk('public')->putFileAs('images', $photo, $photoName);
-        }
-        $photos = implode(',', $photoNames);
-
-        $apartment = new Apartment();
-        $apartment->title = $request->input('title');
-        $apartment->description = $request->input('description');
-        $apartment->rooms = (int) $request->input('rooms');
-        $apartment->max_people = (int) $request->input('max_people');
-        $apartment->price = (int) $request->input('price');
-        $apartment->photos = $photos;
-        $apartment->owner_id = Auth::id();
+        // Create an apartment
+        $apartment = new Apartment([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'max_people' => $request->input('max_people'),
+            'rooms' => $request->input('rooms'),
+            'price' => $request->input('price'),
+        ]);
         $apartment->country = $address[2];
-        $apartment->city = $address[1];
+        $apartment->city = $city[1];
         $apartment->street = $address[0];
 
+        $apartment->owner()->associate(Auth::user());
+
         $apartment->save();
+
+        foreach ($request->file('photos') as $photo)
+        {
+            $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('images', $photo, $photoName);
+            $photo = new Image();
+            $photo->path = $photoName;
+            $apartment->images()->save($photo);
+        }
 
         return redirect('/');
     }
