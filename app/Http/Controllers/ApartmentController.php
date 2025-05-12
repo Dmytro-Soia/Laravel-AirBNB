@@ -56,4 +56,28 @@ class ApartmentController extends Controller
 
         return redirect('/');
     }
+
+    public function detail($id)
+    {
+        $chosenApartment = Apartment::where('id',$id)->with('images')->first();
+
+        return view('details', ['apartment' => $chosenApartment]);
+    }
+
+    public function delete($id)
+    {
+        $containedImages = Image::all()->where('apartment_id', $id);
+        foreach($containedImages as $image)
+        {
+            Storage::disk('public')->delete('images/' . $image->path);
+            $image->delete();
+        }
+        $apartment = Apartment::where('id', $id)->delete();
+        return redirect('/');
+    }
+
+    public function edit(Request $request, $id)
+    {
+
+    }
 }

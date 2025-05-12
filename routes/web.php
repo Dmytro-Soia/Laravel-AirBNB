@@ -32,3 +32,5 @@ Route::post('register', [UserController::class, 'authenticate'])->name('register
 Route::post('login', [UserController::class, 'login'])->name('authorised');
 
 Route::post('rent', [ApartmentController::class, 'create'])->name('create');
+
+Route::get('detail/{id}', [ApartmentController::class, 'detail']);

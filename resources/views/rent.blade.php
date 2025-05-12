@@ -3,7 +3,8 @@
         Rent a house
     </x-slot:title>
     <div class="w-3/4 h-full m-auto place-content-center">
-        <form action="{{ route('create') }}" method="post" enctype="multipart/form-data" class="grid xl:grid-cols-2 md:grid-cols-1 md:mt-10 md:gap-10 xl:gap-0 px-6 py-4 mb-24">
+        <form action="{{ route('create') }}" method="post" enctype="multipart/form-data"
+              class="grid xl:grid-cols-2 md:grid-cols-1 md:mt-10 md:gap-10 xl:gap-0 px-6 py-4 mb-24">
             @csrf
             <div class="bg-pearl-bush-200 rounded-tl-2xl p-8 w-full">
                 <h1 class="text-4xl font-bold mb-6 text-center">
@@ -12,21 +13,22 @@
                     <input type="text" name="title" id="title"
                            placeholder="Name apartment"
                            class="border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 border-1 rounded p-3"
+                           value="{{ old('title') }}"
                            required>
-                    <textarea name="description"
-                              placeholder="Description"
-                              class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 resize-none"
-                              rows="4" required></textarea>
+                    <textarea name="description" placeholder="Description" class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 resize-none" rows="4" required>{{ old('description') }}</textarea>
                     <input type="number" name="rooms" id="rooms" min="1" placeholder="Rooms"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
+                           value="{{ old('rooms') }}"
                            required>
                     <input type="number" name="max_people" id="peoples"
                            min="1" placeholder="Max people"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
+                           value="{{ old('max_people') }}"
                            required>
                     <input type="number" name="price" id="price"
                            placeholder="Price"
                            class="border-1 rounded p-3 border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800"
+                           value="{{ old('price') }}"
                            required>
                     <input type="file" name="photos[]" id="photo"
                            class="border-1 rounded p-3 bg-white border-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-cognac-800 text-placeholders"
