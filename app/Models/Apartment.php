@@ -19,7 +19,9 @@ class Apartment extends Model
         'price',
         'country',
         'city',
-        'street'
+        'street',
+        'lon',
+        'lat',
     ];
 
     public function owner(): BelongsTo

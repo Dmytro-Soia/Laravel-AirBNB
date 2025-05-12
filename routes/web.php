@@ -36,3 +36,7 @@ Route::post('rent', [ApartmentController::class, 'create'])->name('create');
 Route::get('detail/{id}', [ApartmentController::class, 'detail']);
 
 Route::post('delete/{id}', [ApartmentController::class, 'delete']);
+
+Route::get('edit/{id}', [ApartmentController::class, 'edit_index']);
+
+Route::post('edit/{id}', [ApartmentController::class, 'edit']);
