@@ -125,9 +125,7 @@
                     @endforeach
                 ],
                 onChange: function (selectedDates, dateStr, instance) {
-                    // Если выбрали ту же дату дважды
                     if (selectedDates.length === 2 && selectedDates[0].getTime() === selectedDates[1].getTime()) {
-                        // Принудительно устанавливаем диапазон с одной датой
                         instance.selectedDates = [selectedDates[0], selectedDates[0]];
                         instance.input.value = instance.formatDate(selectedDates[0], "Y-m-d") + " to " + instance.formatDate(selectedDates[0], "Y-m-d");
                     }
