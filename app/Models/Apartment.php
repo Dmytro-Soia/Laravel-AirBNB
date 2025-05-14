@@ -37,4 +37,9 @@ class Apartment extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function calculatePrice(int $nights)
+    {
+        return $nights == 0 ? $this->price * 1 + 100 : $this->price * $nights + 100;
+    }
 }

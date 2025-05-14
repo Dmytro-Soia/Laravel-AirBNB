@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://flowbite.com/docs/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <title>{{ $title }}</title>
 </head>
 <body class="h-dvh relative">
@@ -19,22 +22,22 @@
             <div class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
                 <div class="flex flex-col items-start">
                     <label for="where" class="mb-1 font-semibold text-lg">City</label>
-                    <input type="text" id="where" name="where" placeholder="Rome" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-40"/>
+                    <input type="text" id="where" name="where" placeholder="Rome" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 lg:w-25 2-xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="where" class="mb-1 font-semibold text-lg">Min Price</label>
-                    <input type="number" id="where" name="where" placeholder="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-40"/>
+                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 lg:w-25 2-xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="where" class="mb-1 font-semibold text-lg">Max Price</label>
-                    <input type="number" id="where" name="where" placeholder="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-40"/>
+                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 lg:w-25 2-xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="where" class="mb-1 font-semibold text-lg">Rooms</label>
-                    <input type="number" id="where" name="where" placeholder="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-40"/></div>
+                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 lg:w-25 2-xl:w-40"/></div>
                 <div class="flex flex-col items-start">
                     <label for="persons" class="mb-1 font-semibold text-lg">Persons</label>
-                    <input type="number" id="persons" name="persons" placeholder="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-40"/></div>
+                    <input type="number" id="persons" name="persons" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 lg:w-25 2-xl:w-40"/></div>
             </div>
         @endif
     </div>
@@ -60,6 +63,5 @@
     @endif
     {{ $slot }}
 </div>
-<script src="https://flowbite.com/docs/flowbite.min.js"></script>
 </body>
 </html>
