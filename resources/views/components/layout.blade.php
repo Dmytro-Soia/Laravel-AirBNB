@@ -21,23 +21,23 @@
         @if(request()->is('/'))
             <div class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
                 <div class="flex flex-col items-start">
-                    <label for="where" class="mb-1 font-semibold text-lg">City</label>
-                    <input type="text" id="where" name="where" placeholder="Rome" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                    <label for="city" class="mb-1 font-semibold text-lg">City</label>
+                    <input type="text" name="city" placeholder="Rome" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="where" class="mb-1 font-semibold text-lg">Min Price</label>
-                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                    <label for="min_price" class="mb-1 font-semibold text-lg">Min Price</label>
+                    <input type="number" name="min_price" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="where" class="mb-1 font-semibold text-lg">Max Price</label>
-                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                    <label for="max_price" class="mb-1 font-semibold text-lg">Max Price</label>
+                    <input type="number" name="max_price" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="where" class="mb-1 font-semibold text-lg">Rooms</label>
-                    <input type="number" id="where" name="where" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/></div>
+                    <label for="rooms" class="mb-1 font-semibold text-lg">Rooms</label>
+                    <input type="number" name="rooms" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/></div>
                 <div class="flex flex-col items-start">
                     <label for="persons" class="mb-1 font-semibold text-lg">Persons</label>
-                    <input type="number" id="persons" name="persons" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/></div>
+                    <input type="number" name="persons" placeholder="0" min="0" class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/></div>
             </div>
         @endif
     </div>
