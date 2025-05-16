@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Booking;
+use App\Rules\DateValidation;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,16 +13,14 @@ class BookingController extends Controller
 {
     public function checkout(Request $request, $id)
     {
-        if($request->dates === null){
-            return back()->withErrors(['message' => 'Choose dates']);
-        }
-        $dates = explode(' to ',$request->dates);
-        $dateFrom = $dates[0];
-        $dateTo = $dates[1];
+        $request->validate([
+            'dates' => [new DateValidation()],
+            'guest_number' => ['required', 'integer', 'min:1'],
+        ]);
         $checkout = Apartment::where('id', $id)->firstOrFail();
-        $totalCost = $checkout->calculatePrice(Booking::daysDifference($dateFrom, $dateTo));
-        session(['dateFrom' => $dateFrom]);
-        session(['dateTo' => $dateTo]);
+        $totalCost = $checkout->calculatePrice(Booking::daysDifference($request->reserved_at, $request->expired_at));
+        session(['dateFrom' => $request->reserved_at]);
+        session(['dateTo' => $request->expired_at]);
         session()->save();
         return view('/billing', ['checkout' => $checkout, 'totalCost' => $totalCost]);
     }
@@ -49,6 +48,7 @@ class BookingController extends Controller
         $booking->tenant()->associate(Auth::user());
 
         $booking->save();
+        session()->flush();
         return redirect('/')->with('success', 'Booking has been created!');
     }
 }
