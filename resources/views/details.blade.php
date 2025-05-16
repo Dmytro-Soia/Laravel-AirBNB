@@ -7,11 +7,17 @@
         <div class="flex flex-row justify-around px-6 w-2/7 items-center h-20 mb-2">
             <form action="/edit/{{$apartment->id}}" method="get">
                 @csrf
-                <button class="border rounded-2xl text-center text-lg px-10 py-4 bg-cognac-800 text-white hover:bg-cognac-900 min-w-33" type="submit">Edit post</button>
+                <button
+                    class="border rounded-2xl text-center text-xl px-9 py-3 bg-cognac-800 text-white hover:bg-cognac-900 min-w-33"
+                    type="submit">Edit post
+                </button>
             </form>
             <form action="/delete/{{$apartment->id}}" method="post">
                 @csrf
-                <button class="border rounded-2xl text-center text-lg px-10 py-4 bg-cognac-800 text-white hover:bg-cognac-900 min-w-33" type="submit">Delete post</button>
+                <button
+                    class="border rounded-2xl text-center text-xl px-9 py-3 bg-cognac-800 text-white hover:bg-cognac-900 min-w-33"
+                    type="submit">Delete post
+                </button>
             </form>
         </div>
     </div>
@@ -48,7 +54,8 @@
                                 class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus:outline-none">
                                 <svg class="w-4 h-4 text-black" aria-hidden="true"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
                                           d="M5 1 1 5l4 4"/>
                                 </svg>
                                 <span class="sr-only">Previous</span>
@@ -61,7 +68,8 @@
                                 class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus:outline-none">
                                 <svg class="w-4 h-4 text-black" aria-hidden="true"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 4 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
                                           d="m1 9 4-4-4-4"/>
                                 </svg>
                                 <span class="sr-only">Next</span>
@@ -71,26 +79,27 @@
 
         </div>
         <div class="row-span-2 h-full ml-10">
-            <form class="flex shadow-2xl flex-col h-full justify-between bg-pearl-bush-200 border-border-grey w-full rounded-4xl space-x-10">
+            <form method="get" action="billing/{{ $apartment->id }}"
+                  class="flex shadow-2xl flex-col h-full justify-between items-center bg-pearl-bush-200 border-border-grey w-full rounded-4xl space-x-10">
                 @csrf
-                <div class="flex flex-row m-auto mt-5 space-x-10 bg-cognac-800 pt-3 pb-6 px-4 justify-center rounded-2xl">
-                    <div id="datepicker-inlinee" class="text-center text-white" inline-datepicker data-date="02/25/2024">
-                        From
-                    </div>
-                    <div id="datepicker-inline" class="text-center text-white" inline-datepicker data-date="03/25/2024">
-                        To
+                <div class="flex flex-row items-start w-9/10 m-0 p-0 bg-cognac-800 justify-center h-105 rounded-2xl">
+                    <div class="flex flex-col w-7/10 items-center mt-5">
+                    <input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
                     </div>
                 </div>
+
                 <div class="flex flex-col space-y-10 px-6 py-4 w-full items-start">
                     <p class="text-start text-white pl-5 text-2xl underline underline-offset-5 rounded-2xl bg-cognac-800 w-full h-30 pt-2">
-                        {{$apartment->price }} CHF per night<br><br>Developer fee: 100000 CHF</p>
+                        {{$apartment->price }} CHF per night<br><br>Developer fee: 100 CHF</p>
                     <input type="number"
+                           name="guest_number"
+                           required
                            class="w-full transition-all border-border-grey focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-2xl "
-                           placeholder="Number of guests" max="15">
-                    <h2 class="text-start text-white pl-5 underline-offset-6 rounded-2xl bg-cognac-800 text-2xl mt-55 underline w-full py-3">Total cost: 12345678</h2>
+                           placeholder="Number of guests" min="1" max="{{ $apartment->max_people }}
+                           ">
                     <button
-                        class="w-full  h-20 rounded-3xl bg-cognac-800 hover:bg-cognac-900 transition-colors text-white"
-                        type="submit">Rent a house
+                        class="w-full text-2xl mt-85 h-20 rounded-3xl bg-cognac-800 hover:bg-cognac-900 transition-colors text-white"
+                        type="submit">Checkout billing information
                     </button>
                 </div>
             </form>
@@ -100,4 +109,28 @@
                       class="pl-5 resize-none mt-10 w-full text-lg rounded-2xl ring-2 ring-cognac-800 pr-5">{{$apartment->description}}</textarea>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#dates", {
+                mode: "range",
+                inline: true,
+                minDate: "today",
+                dateFormat: "Y-m-d",
+                disable: [
+                    @foreach($bookings as $booking)
+                    {
+                        from: "{{ $booking->reserved_at }}",
+                        to: "{{ $booking->expired_at }}"
+                    },
+                    @endforeach
+                ],
+                onChange: function (selectedDates, dateStr, instance) {
+                    if (selectedDates.length === 2 && selectedDates[0].getTime() === selectedDates[1].getTime()) {
+                        instance.selectedDates = [selectedDates[0], selectedDates[0]];
+                        instance.input.value = instance.formatDate(selectedDates[0], "Y-m-d") + " to " + instance.formatDate(selectedDates[0], "Y-m-d");
+                    }
+                    }
+            });
+        });
+    </script>
 </x-layout>

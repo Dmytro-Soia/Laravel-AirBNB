@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,8 @@ Route::post('delete/{id}', [ApartmentController::class, 'delete']);
 Route::get('edit/{id}', [ApartmentController::class, 'edit_index']);
 
 Route::post('edit/{id}', [ApartmentController::class, 'edit']);
+
+Route::get('detail/billing/{id}', [BookingController::class, 'checkout']);
+
+Route::post('detail/billing/{id}/payed', [BookingController::class, 'booking'])->name('confirmed');
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\Booking;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,8 +64,8 @@ class ApartmentController extends Controller
     public function detail($id)
     {
         $chosenApartment = Apartment::where('id',$id)->with('images')->firstOrFail();
-
-        return view('details', ['apartment' => $chosenApartment]);
+        $existedBookings = Booking::where('apartment_id', $id)->get();
+        return view('details', ['apartment' => $chosenApartment, 'bookings' => $existedBookings]);
     }
 
     public function delete($id)
