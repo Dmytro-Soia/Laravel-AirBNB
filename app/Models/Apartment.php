@@ -42,4 +42,9 @@ class Apartment extends Model
     {
         return $nights == 0 ? $this->price * 1 + 100 : $this->price * $nights + 100;
     }
+
+    public static function getApartment($id)
+    {
+        return Apartment::where('id', $id)->with('images')->firstOrFail();
+    }
 }

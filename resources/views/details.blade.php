@@ -5,6 +5,8 @@
     <div class="flex justify-between">
         <h1 class="text-4xl ml-15 self-center">{{ $apartment->title }}</h1>
         <div class="flex flex-row justify-around px-6 w-2/7 items-center h-20 mb-2">
+            @auth
+            @if(auth()->user()->id === $apartment->owner_id)
             <form action="/edit/{{$apartment->id}}" method="get">
                 @csrf
                 <button
@@ -19,6 +21,8 @@
                     type="submit">Delete post
                 </button>
             </form>
+                @endif
+            @endauth
         </div>
     </div>
     <div class="grid grid-cols-[70%_30%] grid-rows-2h-full">
@@ -82,7 +86,7 @@
             <form method="get" action="billing/{{ $apartment->id }}"
                   class="flex shadow-2xl flex-col h-full justify-between items-center bg-pearl-bush-200 border-border-grey w-full rounded-4xl space-x-10">
                 @csrf
-                <div class="flex flex-row items-start w-9/10 m-0 p-0 bg-cognac-800 justify-center h-105 rounded-2xl">
+                <div class="flex flex-row items-start w-9/10 m-0 p-0 bg-cognac-800 justify-center h-105 rounded-2xl mt-5">
                     <div class="flex flex-col w-7/10 items-center mt-5">
                     <input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
                     </div>

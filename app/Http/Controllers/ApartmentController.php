@@ -2,48 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreApartmentsRequest;
 use App\Models\Apartment;
 use App\Models\Booking;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
-    public function create(Request $request)
+    public function create(StoreApartmentsRequest $request)
     {
-        $request->validate([
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:300'],
-            'rooms' => ['required', 'integer'],
-            'max_people' => ['required', 'integer'],
-            'price' => ['required', 'integer'],
-            'photos' => ['required', 'array'],
-            'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
-            'longitude' => ['required'],
-            'latitude' => ['required'],
-            'address' => ['required'],
-        ]);
-
-        $address = $request->input('address');
-        $address = str_replace(', ', ',', $address);
-        $address = explode(',', $address);
-        $city = explode(' ', $address[1]);
+        $address = explode(', ', $request->address);
 
         // Create an apartment
-        $apartment = new Apartment([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'max_people' => $request->input('max_people'),
-            'rooms' => $request->input('rooms'),
-            'price' => $request->input('price'),
-            'lon' => $request->input('longitude'),
-            'lat' => $request->input('latitude'),
-        ]);
+        $apartment = new Apartment($request->validated());
         $apartment->country = $address[2];
-        $apartment->city = $city[1];
+        $apartment->city = $address[1];
         $apartment->street = $address[0];
 
         $apartment->owner()->associate(Auth::user());
@@ -63,28 +41,33 @@ class ApartmentController extends Controller
 
     public function detail($id)
     {
-        $chosenApartment = Apartment::where('id',$id)->with('images')->firstOrFail();
+        $chosenApartment = Apartment::getApartment($id);
         $existedBookings = Booking::where('apartment_id', $id)->get();
         return view('details', ['apartment' => $chosenApartment, 'bookings' => $existedBookings]);
     }
 
     public function delete($id)
     {
+        if(!Gate::allows('user_is_owner', Apartment::getApartment($id))) {
+            return redirect()->back()->withErrors(['message'=> 'You dont have rights to do this action']);
+        }
         $containedImages = Image::where('apartment_id', $id)->get();
         foreach($containedImages as $image)
         {
             Storage::disk('public')->delete('images/' . $image->path);
             $image->delete();
         }
-        $apartment = Apartment::where('id', $id)->delete();
+        $apartment = Apartment::getApartment($id)->delete();
         return redirect('/');
     }
 
     public function edit_index( $id)
     {
-        $editaibleApartment = Apartment::where('id',$id)->with('images')->first();
-
-        return view('edit', ['editApartment' => $editaibleApartment]);
+        $editableApartment = Apartment::getApartment($id);
+        if(!Gate::allows('user_is_owner', $editableApartment)) {
+            return redirect()->back()->withErrors(['message'=> 'You dont have rights to do this action']);
+        }
+        return view('edit', ['editApartment' => $editableApartment]);
     }
 
     public function edit(Request $request, $id)
@@ -95,15 +78,17 @@ class ApartmentController extends Controller
             'rooms' => ['required', 'integer'],
             'max_people' => ['required', 'integer'],
             'price' => ['required', 'integer'],
-            'photos' => ['array'],
+            'photos' => ['array', 'min:3'],
             'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
             'longitude' => [''],
             'latitude' => [''],
             'address' => ['required'],
         ]);
 
-        $apartToEdit = Apartment::where('id', $id)->with('images')->first();
-
+        $apartToEdit = Apartment::getApartment($id);
+        if(!Gate::allows('user_is_owner', $apartToEdit)) {
+            return redirect()->back()->withErrors(['message'=> 'You dont have rights to do this action']);
+        }
         $address = $request->input('address');
         $address = str_replace(', ', ',', $address);
         $address = explode(',', $address);
