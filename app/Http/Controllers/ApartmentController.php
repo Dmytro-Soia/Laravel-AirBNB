@@ -49,7 +49,7 @@ class ApartmentController extends Controller
     public function delete($id)
     {
         if(!Gate::allows('user_is_owner', Apartment::getApartment($id))) {
-            return redirect()->back()->withErrors(['message'=> 'You dont have rights to do this action']);
+            return redirect()->back()->withErrors(['message'=> 'You don\'t have rights to do this action']);
         }
         $containedImages = Image::where('apartment_id', $id)->get();
         foreach($containedImages as $image)
