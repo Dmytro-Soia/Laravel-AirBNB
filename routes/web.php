@@ -6,7 +6,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomePageController::class, 'index'])->name('home');
+
 
 Route::get('login', function () {
     return view('login');
@@ -27,6 +27,10 @@ Route::get('rent', function() {
 Route::get('edit', function() {
     return view('edit');
 });
+
+Route::get('/', [HomePageController::class, 'index'])->name('home');
+
+Route::get('search', [HomePageController::class, 'search']);
 
 Route::post('register', [UserController::class, 'authenticate'])->name('registered');
 

@@ -2,6 +2,7 @@
     <x-slot:title>
         Home
     </x-slot:>
+    @if(request()->is("/"))
     <h1 class="font-semibold text-center text-8xl mb-20">Most rented locations</h1>
     <div class="element w-full grid grid-cols-3 place-items-center gap-12 mb-30">
         <h1 class="font-semibold text-center text-5xl">Longirod</h1>
@@ -33,7 +34,7 @@
             <img class="rounded-3xl object-cover place-self-center w-full pt-1 h-96" id="qwe" src="/images/b.avif">
         </div>
     </div>
-
+@endif
     <div class="grid grid-cols-5 gap-18 m-5 pb-20">
         @foreach($apartments as $apartment)
             <div class="space-y-2 rounded-3xl shadow-block pb-3 group h-125">

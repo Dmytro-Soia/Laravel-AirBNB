@@ -19,7 +19,8 @@
     <a href="/" class="text-cognac-800 @if(request()->is("/")) text-5xl @else text-4xl @endif">Not Fake AirBNB</a>
     <div class="left-1/2 ml-35">
         @if(request()->is('/'))
-            <div class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
+            <form method="get" action="search" class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
+                @csrf
                 <div class="flex flex-col items-start">
                     <label for="city" class="mb-1 font-semibold text-lg">City</label>
                     <input type="text" name="city" placeholder="Rome" min="0"
@@ -45,7 +46,13 @@
                     <input type="number" name="persons" placeholder="0" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
                 </div>
-            </div>
+                <div class="flex flex-col items-start">
+                    <button type="submit" id="but"
+                            class="border border-gray-600 mt-8 bg-cognac-800 text-white transition-colors hover:bg-cognac-900 rounded-md px-2 py-1 w-24 2xl:w-40">
+                        Search
+                    </button>
+                </div>
+            </form>
         @endif
     </div>
         <div class="flex flex-row space-x-6">
