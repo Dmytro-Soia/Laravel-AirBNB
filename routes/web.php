@@ -46,3 +46,5 @@ Route::get('detail/billing/{id}', [BookingController::class, 'checkout']);
 
 Route::post('detail/billing/{id}/payed', [BookingController::class, 'booking'])->name('confirmed');
 
+Route::post('logout', [UserController::class, 'logout']);
+

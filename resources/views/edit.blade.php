@@ -39,8 +39,8 @@
                 <h1 class="text-4xl font-bold mb-6 text-center">
                     Choose location</h1>
                 <div id="map" class="h-117 hover:ring-2 hover:ring-cognac-800 transition-all rounded-2xl"></div>
-                <input type="hidden" name="latitude" id="latitude" required>
-                <input type="hidden" name="longitude" id="longitude" required>
+                <input type="hidden" name="lat" id="latitude" required>
+                <input type="hidden" name="lon" id="longitude" required>
                 <input type="hidden" name="address" id="address" required>
             </div>
 
@@ -95,7 +95,25 @@
 
                 geocoder.geocode({ location: location }, (results, status) => {
                     if (status === "OK" && results[0]) {
-                        const address = results[0].formatted_address;
+                        const components = results[0].address_components;
+                        let street = "";
+                        let city = "";
+                        let country = "";
+
+                        components.forEach(component => {
+                            const types = component.types;
+                            if (types.includes("route")) {
+                                street = component.long_name;
+                            }
+                            if (types.includes("locality") || types.includes("administrative_area_level_2")) {
+                                city = component.long_name;
+                            }
+                            if (types.includes("country")) {
+                                country = component.long_name;
+                            }
+                        });
+
+                        const address = `${street}, ${city}, ${country}`;
                         document.getElementById("address").value = address;
                         console.log("Address:", address);
                     } else {
