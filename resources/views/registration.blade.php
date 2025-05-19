@@ -8,9 +8,9 @@
             <div class="flex flex-col space-y-5 w-lg">
                 @csrf
                 <label class="text-l" for="name">Username</label>
-                <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="text" name="name">
+                <input class="border-1 rounded-2xl border-neutral-500 pl-2" value="{{ old("name") }}" type="text" name="name">
                 <label class="text-l" for="email">Email</label>
-                <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="text" name="email">
+                <input class="border-1 rounded-2xl border-neutral-500 pl-2" value="{{ old("email") }}" type="text" name="email">
                 <label class="text-l" for="password">Password</label>
                 <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="password" name="password">
                 <label class="text-l" for="password_confirmation">Password</label>
