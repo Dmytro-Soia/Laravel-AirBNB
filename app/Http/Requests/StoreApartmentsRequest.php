@@ -35,4 +35,14 @@ class StoreApartmentsRequest extends FormRequest
             'address' => ['required'],
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $address = explode(', ', $this->request->get('address'));
+        $this->merge([
+            'country' => $address[0],
+            'city' => $address[1],
+            'street' => $address[2],
+        ]);
+    }
 }

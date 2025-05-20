@@ -25,14 +25,16 @@ class CheckoutRequest extends FormRequest
         return [
             'dates' => ['required'],
             'guest_number' => ['required'],
+            'reserved_at' => ['required', 'date', 'after:today'],
+            'expired_at' => ['required', 'date', 'after_or_equal:reserved_at'],
         ];
     }
 
-    protected function passedValidation(): void
+    protected function prepareForValidation(): void
     {
         $this->merge([
-            'reserved_at' => explode(' to ', $this->dates)[0],
-            'expired_at' => explode(' to ', $this->dates)[1],
+            'reserved_at' => explode(' to ', $this->dates)[0] ?? '',
+            'expired_at' => explode(' to ', $this->dates)[1] ?? '',
         ]);
     }
 }

@@ -32,7 +32,9 @@ class UpdateApartmentsRequest extends FormRequest
             'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
             'lat' => ['numeric', 'nullable'],
             'lon' => ['numeric', 'nullable'],
-            'address' => ['string','nullable'],
+            'country' => ['nullable', 'string'],
+            'city' => ['nullable', 'string'],
+            'street' => ['nullable', 'string'],
         ];
     }
 }

@@ -33,7 +33,7 @@
                     <!-- Item 1 -->
                     @foreach($apartment->images as $image)
                         <div class="hidden duration-700 ease-in-out z-14 hover:z-14" data-carousel-item>
-                            <img src="{{ url('storage/images/' . $image->path) }}"
+                            <img src="{{ url('storage/' . $image->path) }}"
                                  class="absolute block w-full h-full object-cover"
                                  alt="Carousel image">
                         </div>

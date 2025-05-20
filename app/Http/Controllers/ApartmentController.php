@@ -52,11 +52,11 @@ class ApartmentController extends Controller
 
         foreach ($request->file('photos') as $photo)
         {
-            $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('images', $photo, $photoName);
-            $photo = new Image();
-            $photo->path = $photoName;
-            $apartment->images()->save($photo);
+            $path = Storage::disk('public')->putFile('images', $photo);
+            $image = new Image([
+                'path' => $path
+            ]);
+            $apartment->images()->save($image);
         }
         return redirect('/');
     }
