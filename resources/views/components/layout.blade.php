@@ -24,31 +24,31 @@
                 <div class="flex flex-col items-start">
                     <label for="city" class="mb-1 font-semibold text-lg">City</label>
                     <input type="text" name="city" placeholder="Rome" min="0"
-                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="min_price" class="mb-1 font-semibold text-lg">Min Price</label>
                     <input type="number" name="min_price" placeholder="0" min="0"
-                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 md:w-24"/>
+                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="max_price" class="mb-1 font-semibold text-lg">Max Price</label>
                     <input type="number" name="max_price" placeholder="0" min="0"
-                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="rooms" class="mb-1 font-semibold text-lg">Rooms</label>
                     <input type="number" name="rooms" placeholder="0" min="0"
-                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <label for="persons" class="mb-1 font-semibold text-lg">Persons</label>
                     <input type="number" name="persons" placeholder="0" min="0"
-                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-24 2xl:w-40"/>
+                           class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
                     <button type="submit" id="but"
-                            class="border border-gray-600 mt-8 bg-cognac-800 text-white transition-colors hover:bg-cognac-900 rounded-md px-2 py-1 w-24 2xl:w-40">
+                            class="border border-gray-600 mt-8 bg-cognac-800 text-white transition-colors hover:bg-cognac-900 rounded-md px-2 py-1 w-28">
                         Search
                     </button>
                 </div>

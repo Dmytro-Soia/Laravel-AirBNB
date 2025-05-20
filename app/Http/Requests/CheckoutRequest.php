@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\DateValidation;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +12,7 @@ class CheckoutRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -24,8 +23,16 @@ class CheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dates' => [new DateValidation()],
-            'guest_number' => ['required', 'integer', 'min:1'],
+            'dates' => 'required',
+            'guest_number' => 'required',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'reserved_at' => explode(' to ', $this->dates)[0],
+            'expired_at' => explode(' to ', $this->dates)[1],
+        ]);
     }
 }
