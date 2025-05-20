@@ -23,12 +23,12 @@ class CheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dates' => 'required',
-            'guest_number' => 'required',
+            'dates' => ['required'],
+            'guest_number' => ['required'],
         ];
     }
 
-    protected function prepareForValidation(): void
+    protected function passedValidation(): void
     {
         $this->merge([
             'reserved_at' => explode(' to ', $this->dates)[0],

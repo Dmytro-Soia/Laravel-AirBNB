@@ -99,8 +99,8 @@
                            name="guest_number"
                            required
                            class="w-full transition-all border-border-grey focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-2xl "
-                           placeholder="Number of guests" min="1" max="{{ $apartment->max_people }}
-                           ">
+                           placeholder="Number of guests" min="1" max="{{$apartment->max_people}}"
+                    >
                     <button
                         class="w-full text-2xl mt-85 h-20 rounded-3xl bg-cognac-800 hover:bg-cognac-900 transition-colors text-white"
                         type="submit">Checkout billing information
