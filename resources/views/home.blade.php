@@ -3,41 +3,77 @@
         Home
     </x-slot:>
     @if(request()->is("/"))
-    <h1 class="font-semibold text-center text-8xl mb-20">Most rented locations</h1>
-    <div class="element w-full grid grid-cols-3 place-items-center gap-12 mb-30">
-        <h1 class="font-semibold text-center text-5xl">Longirod</h1>
-        <h1 class="font-semibold text-center text-5xl">Lausanne</h1>
-        <h1 class="font-semibold text-center text-5xl">Vevey</h1>
-        <div class="w-9/10 rounded-3xl ">
-            <label for="qwe" class=" text-2xl pl-15 font-bold mb-4">Place Name</label>
-            <img class="rounded-3xl place-self-center object-cover pt-1 w-full self-center h-96" id="qwe"
-                 src="/images/a.avif">
+        <h1 class="font-semibold text-center text-8xl mb-20">Most rented locations</h1>
+        <div class="element w-full grid grid-cols-3 place-items-center gap-12 mb-30">
+            @foreach($apartmentsMR as $cities)
+                <div class="flex flex-col w-full justify-between space-y-5">
+                    <h1 class="font-semibold text-center text-5xl">{{ $cities[0]->city }}</h1>
+                    @foreach($cities as $MRapartment)
+                    <div class="w-full group/MRapartments rounded-3xl">
+                        <label for="qwe" class="text-2xl pl-6 font-bold">{{ $MRapartment->street }}</label>
+                        <div id="default-carousel" class="relative w-full" data-carousel="static">
+                            <!-- Carousel wrapper -->
+                            <div class="relative w-full h-96 overflow-hidden rounded-3xl z-15 hover:z-14">
+                                <!-- Items -->
+                                @foreach($MRapartment->images as $image)
+                                    <div class="hidden duration-700 ease-in-out w-full z-14 hover:z-14" data-carousel-item>
+                                        <img src="{{ url('storage/images/' . $image->path) }}"
+                                             class="absolute block w-full h-96 object-cover"
+                                             alt="Carousel image">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <!-- Slider indicators -->
+                            <div
+                                class="absolute z-15 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                                @foreach($MRapartment->images as $image)
+                                    <button type="button"
+                                            class="w-2 h-2 rounded-full"
+                                            aria-current="{{$loop->index === 0 ? 'true' : 'false'}}"
+                                            aria-label="Slide {{ $loop->index + 1 }}"
+                                            data-carousel-slide-to="{{$loop->index}}">
+                                    </button>
+                                @endforeach
+                            </div>
+                            <!-- Slider controls -->
+                            <button type="button"
+                                    class="absolute top-45 start-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover/MRapartments:opacity-100  transition-opacity duration-400 focus:outline-none"
+                                    data-carousel-prev>
+                            <span
+                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus/MRapartments:outline-none">
+                                <svg class="w-2.5 h-2.5 text-black" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M5 1 1 5l4 4"/>
+                                </svg>
+                                <span class="sr-only">Previous</span>
+                            </span>
+                            </button>
+                            <button type="button"
+                                    class="absolute  top-45 end-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover/MRapartments:opacity-100 transition-opacity duration-400  focus:outline-none"
+                                    data-carousel-next>
+                            <span
+                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus/MRapartments:outline-none">
+                                <svg class="w-2.5 h-2.5 text-black" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 4 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="m1 9 4-4-4-4"/>
+                                </svg>
+                                <span class="sr-only">Next</span>
+                            </span>
+                            </button>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
-        <div class="w-9/10 rounded-3xl ">
-            <label for="qwe" class=" text-2xl pl-15 font-bold mb-4">Place Name</label>
-            <img class="rounded-3xl object-cover place-self-center pt-1 w-full h-96" id="qwe" src="/images/bb.avif">
-        </div>
-        <div class="w-9/10 rounded-3xl ">
-            <label for="qwe" class="text-2xl pl-15  py-2 font-bold mb-4">Place Name</label>
-            <img class="rounded-3xl object-cover place-self-center pt-1 w-full h-96" id="qwe" src="/images/b.avif">
-        </div>
-        <div class="w-9/10 rounded-3xl ">
-            <label for="qwe" class=" text-2xl pl-15  font-bold">Place Name</label>
-            <img class="rounded-3xl object-cover place-self-center pt-1 w-full h-96" id="qwe" src="/images/b.avif">
-        </div>
-        <div class="w-9/10 rounded-3xl ">
-            <label for="qwe" class=" text-2xl pl-15  font-bold">Place Name</label>
-            <img class="rounded-3xl object-cover place-self-center pt-1 w-full h-96" id="qwe" src="/images/aa.avif">
-        </div>
-        <div class=" w-9/10 rounded-3xl">
-            <label for="qwe" class=" text-2xl pl-15  font-bold">Place Name</label>
-            <img class="rounded-3xl object-cover place-self-center w-full pt-1 h-96" id="qwe" src="/images/b.avif">
-        </div>
-    </div>
-@endif
+    @endif
     <div class="grid grid-cols-5 gap-18 m-5 pb-20">
         @foreach($apartments as $apartment)
-            <div class="space-y-2 rounded-3xl shadow-block pb-3 group h-125">
+            <div class="space-y-2 rounded-3xl shadow-block pb-3 group/allApartments h-125">
                 <div id="test-carousel">
                     <div id="default-carousel" class="relative w-full" data-carousel="static">
                         <!-- Carousel wrapper -->
@@ -53,7 +89,7 @@
                         </div>
                         <!-- Slider indicators -->
                         <div
-                            class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                            class="absolute z-15 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
                             @foreach($apartment->images as $image)
                                 <button type="button"
                                         class="w-2 h-2 rounded-full"
@@ -65,26 +101,28 @@
                         </div>
                         <!-- Slider controls -->
                         <button type="button"
-                                class="absolute top-37 start-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover:opacity-100  transition-opacity duration-400 focus:outline-none"
+                                class="absolute top-37 start-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover/allApartments:opacity-100  transition-opacity duration-400 focus:outline-none"
                                 data-carousel-prev>
                             <span
-                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus:outline-none">
+                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus/allApartments:outline-none">
                                 <svg class="w-2.5 h-2.5 text-black" aria-hidden="true"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
                                           d="M5 1 1 5l4 4"/>
                                 </svg>
                                 <span class="sr-only">Previous</span>
                             </span>
                         </button>
                         <button type="button"
-                                class="absolute  top-37 end-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-400  focus:outline-none"
+                                class="absolute  top-37 end-0 z-15 flex items-center justify-center h-1/10 px-4 cursor-pointer opacity-0 group-hover/allApartments:opacity-100 transition-opacity duration-400  focus:outline-none"
                                 data-carousel-next>
                             <span
-                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus:outline-none">
+                                class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white hover:scale-105 hover:opacity-100 opacity-70 transition-all group-focus/allApartments:outline-none">
                                 <svg class="w-2.5 h-2.5 text-black" aria-hidden="true"
                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 4 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
                                           d="m1 9 4-4-4-4"/>
                                 </svg>
                                 <span class="sr-only">Next</span>
@@ -97,10 +135,10 @@
                     <div class="text-wrap text-lg w-full line-clamp-3 h-21 font-normal px-4 break-words">
                         {{ $apartment->description }}
                     </div>
-                    <p class="text-lg font-bold pl-4 underline">{{ $apartment->price }} CHF <span class="font-extralight">night</span></p>
+                    <p class="text-lg font-bold pl-4 underline">{{ $apartment->price }} CHF <span
+                            class="font-extralight">night</span></p>
                 </a>
             </div>
         @endforeach
-    </div>
     </div>
 </x-layout>
