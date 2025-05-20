@@ -12,7 +12,9 @@ class Image extends Model
     /** @use HasFactory<ImageFactory> */
     use HasFactory;
 
-
+    protected $fillable = [
+        'path',
+    ];
 
     public function apartment(): BelongsTo
     {

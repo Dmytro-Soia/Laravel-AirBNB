@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class HomePageController extends Controller
 {
-    public function index()
-    {
-        $apartments = Apartment::with('images')->get();
-
-        return view('home', ['apartments' => $apartments]);
-    }
-
     public function search(Request $request)
     {
         $apartments = Apartment::with('images')

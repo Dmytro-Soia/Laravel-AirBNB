@@ -39,9 +39,9 @@
                 <h1 class="text-4xl font-bold mb-6 text-center">
                     Choose location</h1>
                 <div id="map" class="h-117 hover:ring-2 hover:ring-cognac-800 transition-all rounded-2xl"></div>
-                <input type="hidden" name="lat" id="latitude" required>
-                <input type="hidden" name="lon" id="longitude" required>
-                <input type="hidden" name="address" id="address" required>
+                <input type="hidden" name="lat" value="{{$editApartment->lat}}" id="latitude" required>
+                <input type="hidden" name="lon" value="{{$editApartment->lon}}" id="longitude" required>
+                <input type="hidden" name="address" value="{{$editApartment->country}}, {{$editApartment->city}}, {{$editApartment->street}}" id="address" required>
             </div>
 
             <div class="md:col-span-1 xl:col-span-2">

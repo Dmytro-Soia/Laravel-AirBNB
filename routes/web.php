@@ -28,7 +28,7 @@ Route::get('edit', function() {
     return view('edit');
 });
 
-Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/', [ApartmentController::class, 'mostRented'])->name('home');
 
 Route::get('search', [HomePageController::class, 'search']);
 
@@ -38,17 +38,17 @@ Route::post('login', [UserController::class, 'login'])->name('authorised');
 
 Route::post('rent', [ApartmentController::class, 'create'])->name('create');
 
-Route::get('detail/{id}', [ApartmentController::class, 'detail']);
+Route::get('detail/{apartment}', [ApartmentController::class, 'detail']);
 
-Route::post('delete/{id}', [ApartmentController::class, 'delete']);
+Route::post('delete/{apartment}', [ApartmentController::class, 'delete']);
 
-Route::get('edit/{id}', [ApartmentController::class, 'edit_index']);
+Route::get('edit/{apartment}', [ApartmentController::class, 'edit_index']);
 
-Route::post('edit/{id}', [ApartmentController::class, 'edit']);
+Route::post('edit/{apartment}', [ApartmentController::class, 'edit']);
 
-Route::get('detail/billing/{id}', [BookingController::class, 'checkout']);
+Route::get('detail/billing/{apartment}', [BookingController::class, 'checkout']);
 
-Route::post('detail/billing/{id}/payed', [BookingController::class, 'booking'])->name('confirmed');
+Route::post('detail/billing/{apartment}/payed', [BookingController::class, 'booking'])->name('confirmed');
 
 Route::post('logout', [UserController::class, 'logout']);
 

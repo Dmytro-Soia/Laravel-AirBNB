@@ -33,7 +33,7 @@
                     <!-- Item 1 -->
                     @foreach($apartment->images as $image)
                         <div class="hidden duration-700 ease-in-out z-14 hover:z-14" data-carousel-item>
-                            <img src="{{ url('storage/images/' . $image->path) }}"
+                            <img src="{{ url('storage/' . $image->path) }}"
                                  class="absolute block w-full h-full object-cover"
                                  alt="Carousel image">
                         </div>
@@ -99,8 +99,8 @@
                            name="guest_number"
                            required
                            class="w-full transition-all border-border-grey focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-2xl "
-                           placeholder="Number of guests" min="1" max="{{ $apartment->max_people }}
-                           ">
+                           placeholder="Number of guests" min="1" max="{{$apartment->max_people}}"
+                    >
                     <button
                         class="w-full text-2xl mt-85 h-20 rounded-3xl bg-cognac-800 hover:bg-cognac-900 transition-colors text-white"
                         type="submit">Checkout billing information

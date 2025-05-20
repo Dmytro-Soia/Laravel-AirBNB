@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApartmentsRequest;
+use App\Http\Requests\UpdateApartmentsRequest;
 use App\Models\Apartment;
 use App\Models\Booking;
 use App\Models\Image;
@@ -14,6 +15,27 @@ use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
+    public function mostRented()
+    {
+        $treeMostRentedCities = Apartment::select('city', \DB::raw('COUNT(bookings.id) as res_count'))
+            ->join('bookings', 'apartments.id', '=', 'bookings.apartment_id')
+            ->groupBy('city')
+            ->orderByDesc('res_count')
+            ->limit(3)
+            ->get();
+
+        $cities = $treeMostRentedCities->pluck('city');
+        $allApartments = [];
+        foreach ($cities as $city) {
+            $apartments = Apartment::with('images')->withCount('bookings')->orderBy('bookings_count', 'desc')->where('city', $city)->limit(2)->get();
+
+            $allApartments[$city] = $apartments;
+        }
+        $apartments = Apartment::with('images')->get();
+
+        return view('home', ['apartmentsMR' => $allApartments, 'apartments' => $apartments]);
+    }
+
     public function create(StoreApartmentsRequest $request)
     {
         $address = explode(', ', $request->address);
@@ -30,68 +52,65 @@ class ApartmentController extends Controller
 
         foreach ($request->file('photos') as $photo)
         {
-            $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('images', $photo, $photoName);
-            $photo = new Image();
-            $photo->path = $photoName;
-            $apartment->images()->save($photo);
+            $path = Storage::disk('public')->putFile('images', $photo);
+            $image = new Image([
+                'path' => $path
+            ]);
+            $apartment->images()->save($image);
         }
         return redirect('/');
     }
 
-    public function detail($id)
+    public function detail(Apartment $apartment)
     {
-        $chosenApartment = Apartment::getApartment($id);
-        $existedBookings = Booking::where('apartment_id', $id)->get();
-        return view('details', ['apartment' => $chosenApartment, 'bookings' => $existedBookings]);
+        $existedBookings = Booking::where('apartment_id', $apartment->id)->get();
+        return view('details', ['apartment' => $apartment, 'bookings' => $existedBookings]);
     }
 
-    public function delete($id)
+    public function delete(Apartment $apartment)
     {
-        Gate::authorize('user_is_owner', Apartment::getApartment($id));
-        $containedImages = Image::where('apartment_id', $id)->get();
+        Gate::authorize('user_is_owner', $apartment);
+        $containedImages = Image::where('apartment_id', $apartment->id)->get();
         foreach($containedImages as $image)
         {
             Storage::disk('public')->delete('images/' . $image->path);
             $image->delete();
         }
-        $apartment = Apartment::getApartment($id)->delete();
+        $apartment->delete();
         return redirect('/');
     }
 
-    public function edit_index( $id)
+    public function edit_index(Apartment $apartment )
     {
-        $editableApartment = Apartment::getApartment($id);
-        Gate::authorize('user_is_owner', $editableApartment);
-        return view('edit', ['editApartment' => $editableApartment]);
+        Gate::authorize('user_is_owner', $apartment);
+        return view('edit', ['editApartment' => $apartment]);
     }
 
-    public function edit(StoreApartmentsRequest $request, $id)
+    public function edit(UpdateApartmentsRequest $request, Apartment $apartment)
     {
-        $apartToEdit = Apartment::getApartment($id);
-        Gate::authorize('user_is_owner', $apartToEdit);
+        Gate::authorize('user_is_owner', $apartment);
         $address = explode(', ', $request->address);
 
-        $apartToEdit->fill($request->validated());
-        $apartToEdit->country = $address[2];
-        $apartToEdit->city = $address[1];
-        $apartToEdit->street = $address[0];
+        $apartment->fill($request->validated());
+        $apartment->country = $address[2];
+        $apartment->city = $address[1];
+        $apartment->street = $address[0];
 
-        $apartToEdit->save();
+        $apartment->save();
 
     if($request->hasFile('photos')) {
-        foreach($apartToEdit->images as $image)
+        foreach($apartment->images as $image)
         {
             Storage::disk('public')->delete('images/' . $image->path);
         }
-        $apartToEdit->images()->delete();
+        $apartment->images()->delete();
         foreach ($request->file('photos') as $photo)
         {
             $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
             Storage::disk('public')->putFileAs('images', $photo, $photoName);
             $photo = new Image();
             $photo->path = $photoName;
-            $apartToEdit->images()->save($photo);
+            $apartment->images()->save($photo);
         }
     }
         return redirect('/');
