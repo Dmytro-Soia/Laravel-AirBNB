@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class ApartmentController extends Controller
 {
     public function mostRented()
     {
-        $treeMostRentedCities = Apartment::select('city', \DB::raw('COUNT(bookings.id) as res_count'))
+        $treeMostRentedCities = Apartment::select('city', DB::raw('COUNT(bookings.id) as res_count'))
             ->join('bookings', 'apartments.id', '=', 'bookings.apartment_id')
             ->groupBy('city')
             ->orderByDesc('res_count')
@@ -31,7 +32,7 @@ class ApartmentController extends Controller
 
             $allApartments[$city] = $apartments;
         }
-        $apartments = Apartment::with('images')->get();
+        $apartments = Apartment::with('images')->orderBy('created_at','desc')->get();
 
         return view('home', ['apartmentsMR' => $allApartments, 'apartments' => $apartments]);
     }
@@ -76,6 +77,7 @@ class ApartmentController extends Controller
             Storage::disk('public')->delete('images/' . $image->path);
             $image->delete();
         }
+        Booking::where('apartment_id', $apartment->id)->delete();
         $apartment->delete();
         return redirect('/');
     }
@@ -106,11 +108,11 @@ class ApartmentController extends Controller
         $apartment->images()->delete();
         foreach ($request->file('photos') as $photo)
         {
-            $photoName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('images', $photo, $photoName);
-            $photo = new Image();
-            $photo->path = $photoName;
-            $apartment->images()->save($photo);
+            $path = Storage::disk('public')->putFile('images', $photo);
+            $image = new Image([
+                'path' => $path
+            ]);
+            $apartment->images()->save($image);
         }
     }
         return redirect('/');

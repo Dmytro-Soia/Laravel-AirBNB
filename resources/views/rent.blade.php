@@ -3,7 +3,7 @@
         Rent a house
     </x-slot:title>
     <div class="w-3/4 h-full m-auto place-content-center">
-        <form action="{{ route('create') }}" method="post" enctype="multipart/form-data"
+        <form action="{{ route('apartment.create') }}" method="post" enctype="multipart/form-data"
               class="grid xl:grid-cols-2 md:grid-cols-1 md:mt-10 md:gap-10 xl:gap-0 px-6 py-4 mb-24">
             @csrf
             <div class="bg-pearl-bush-200 rounded-tl-2xl p-8 w-full">

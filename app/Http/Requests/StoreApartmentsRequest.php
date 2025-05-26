@@ -28,7 +28,7 @@ class StoreApartmentsRequest extends FormRequest
             'rooms' => ['required', 'integer'],
             'max_people' => ['required', 'integer'],
             'price' => ['required', 'integer'],
-            'photos' => ['required', 'array', 'min:3'],
+            'photos' => ['required', 'array', 'min:5'],
             'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
             'lat' => ['required', 'numeric'],
             'lon' => ['required', 'numeric'],
