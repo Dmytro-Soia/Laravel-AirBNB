@@ -26,5 +26,12 @@ class AppServiceProvider extends ServiceProvider
             return $user->id === $apartment->owner_id;
         });
 
+        Gate::define('same_user', function(User $user, int $ownerId) {
+            return $user->id === $ownerId;
+        });
+
+        Gate::define('user_is_admin', function(User $user) {
+            return $user->admin;
+        });
     }
 }
