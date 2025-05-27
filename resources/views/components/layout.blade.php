@@ -19,7 +19,7 @@
     <a href="/" class="text-cognac-800 @if(request()->is("/")) text-5xl @else text-4xl @endif">Not Fake AirBNB</a>
     <div class="left-1/2 ml-35">
         @if(request()->is('/'))
-            <form method="get" action="search"
+            <form method="get" action="{{ route('apartment.search') }}"
                   class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
                 @csrf
                 <div class="flex flex-col items-start">
@@ -57,6 +57,12 @@
         @endif
     </div>
     <div class="flex flex-row h-17 space-x-6">
+        @auth
+        @if(auth()->user()->admin)
+            <a href="{{route('adminpanel')}}"
+               class="px-4 rounded-2xl bg-cognac-800 text-white text-3xl flex items-center">Admin panel</a>
+        @endif
+        @endauth
         <a href="{{route('apartment.create')}}"
            class="px-4 rounded-2xl bg-cognac-800 text-white text-3xl flex items-center">NFAirBNB
             your
@@ -70,7 +76,10 @@
             <a href="{{ route('userprofile.user', $user = auth()->id())}}"
                class="text-3xl bg-cognac-800 px-4 py-2 rounded-2xl">
                 <div class="flex flex-row space-x-2 h-full">
-                        <p class="text-white flex items-center">Check profile</p>
+                    @if(auth()->user()->profile_img)
+                    <img src="{{ '/storage/images/' . auth()->user()->profile_img }}" class="rounded-full w-14 h-14">
+                    @endif
+                        <p class="text-white flex items-center">{{auth()->user()->name}}</p>
                     </div>
                 </a>
             @endauth

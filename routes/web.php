@@ -1,10 +1,23 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('login', function () {
+    return view('login');
+});
+
+Route::get('register', function () {
+    return view('registration');
+});
+
+Route::get('rent', function() {
+    return view('rent');
+});
 
 Route::post('register', [UserController::class, 'authenticate'])->name('registered');
 Route::post('login', [UserController::class, 'login'])->name('authorised');
@@ -26,3 +39,6 @@ Route::get('userprofile/{user}', [UserController::class, 'userprofile'])->name('
 Route::get('userprofile/{user}/edit', [UserController::class, 'edit_user_profile_index'])->middleware('auth')->name('user.edit_profile');
 Route::post('userprofile/{user}/edit', [UserController::class, 'edited'])->name('user.edited_profile');
 Route::post('userprofile/{user}/delete', [UserController::class, 'deleteProfile'])->name('user.delete_profile');
+
+Route::get('/adminpanel', [AdminController::class, 'index'])->name('adminpanel');
+Route::post('/adminpanel/{user}', [AdminController::class, 'changeStatus'])->name('adminpanel.changeStatus');

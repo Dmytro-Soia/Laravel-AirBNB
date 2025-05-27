@@ -27,6 +27,8 @@ class ApartmentFactory extends Factory
                 'country' => fake()->country,
                 'city' => fake()->city,
                 'street' => fake()->address,
+                'lat' => fake()->latitude,
+                'lon' => fake()->longitude,
         ];
     }
 }

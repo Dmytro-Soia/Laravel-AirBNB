@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -60,11 +61,14 @@ class UserController extends Controller
 
     public function edit_user_profile_index(User $user)
     {
+        Gate::authorize('same_user', $user->id);
+
         return view('edit_profile', ['user' => $user]);
     }
 
     public function edited(Request $request, User $user)
     {
+        Gate::authorize('same_user', $user->id);
         $request->validate([
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email'],

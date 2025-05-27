@@ -24,12 +24,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ])->create();
 
-//        User::factory()
-//            ->count(15)
-//            ->has(Apartment::factory()
-//                ->has(Image::factory()->count(3))
-//                ->count(5))
-//            ->create();
+        User::factory()
+            ->count(10)
+            ->has(Apartment::factory()
+                ->has(Image::factory()->count(5))
+                ->count(5))
+            ->create();
 //
 //        $users = User::all();
 //        $apartments = Apartment::all();
