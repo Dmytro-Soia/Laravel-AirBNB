@@ -119,10 +119,10 @@
         <div class="w-66 bg-cognac-800 text-white p-6 space-y-8 fixed right-0 h-screen">
             <div class="flex flex-col items-center space-y-4">
                 <div class="w-35 h-35 bg-pearl-bush-100 rounded-full flex items-center justify-center">
-                    @if(isset($user->prof_pic))
-                        <img src="{{ url('storage/images/' . $user->prof_pic->prof_pic) }}" class="h-full rounded-full object-cover">
+                    @if(isset($user->profile_img))
+                        <img src="{{ url('storage/images/' . $user->profile_img) }}" class="h-full rounded-full object-cover">
                     @else
-                        <p class="text-6xl font-bold text-cognac-800">{{$user->prof_pic}}{{strtoupper(mb_substr($user->name, 0,1))}}</p>
+                        <p class="text-6xl font-bold text-cognac-800">{{$user->profile_img}}{{strtoupper(mb_substr($user->name, 0,1))}}</p>
                     @endif
 
                 </div>
@@ -140,7 +140,6 @@
                     My Bookings
                 </a>
                 <form method="GET" action='{{ route('user.edit_profile', $user->id)}}' class="mt-auto">
-                    @csrf
                     <button type="submit"
                             class="w-full px-4 py-2 rounded-lg bg-cognac-900 hover:bg-cognac-950 transition">
                         Edit

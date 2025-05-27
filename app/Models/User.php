@@ -5,9 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -58,8 +59,9 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'tenant_id');
     }
 
-    public function prof_pic(): HasOne
-    {
-        return $this->hasOne(ProfilePicture::class, 'user_id');
+    public static function saveImg($file, $user) {
+        $imgName = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
+        Storage::disk('public')->putFileAs('images', $file, $imgName);
+        $user->profile_img = $imgName;
     }
 }

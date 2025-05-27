@@ -63,7 +63,7 @@
             house</a>
         @guest
             <div class="flex flex-row py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 space-x-3">
-                <a href="{{ route('registered') }}" class="text-3xl p">Register</a>
+                <a href="{{ route('registered') }}" class="text-3xl flex items-center">Register</a>
             </div>
         @endguest
         @auth

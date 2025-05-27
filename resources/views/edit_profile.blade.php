@@ -7,8 +7,8 @@
            @csrf
             <h2 class="text-3xl">Edit account</h2>
             <div class="flex flex-col space-y-5 w-lg">
-                <label class="text-l" for="email">New username</label>
-                <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="text" value="{{$user->name}}" name="name">
+                <label class="text-l" for="username">New username</label>
+                <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="text" value="{{$user->name}}" name="name" id="username">
                 <label class="text-l" for="email">New email</label>
                 <input class="border-1 rounded-2xl border-neutral-500 pl-2" type="text" value="{{$user->email}}" name="email">
                 <label class="text-l" for="prof_pic">New profile picture</label>

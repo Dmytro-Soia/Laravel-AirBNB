@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_pictures', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->string('prof_pic')->nullable();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('profile_img')->nullable();
         });
-}
+    }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('profile_pictures');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('profile_img');
+        });
     }
 };
