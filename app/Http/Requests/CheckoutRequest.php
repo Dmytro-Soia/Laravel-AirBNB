@@ -12,7 +12,7 @@ class CheckoutRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -25,7 +25,7 @@ class CheckoutRequest extends FormRequest
         return [
             'dates' => ['required'],
             'guest_number' => ['required'],
-            'reserved_at' => ['required', 'date', 'after:today'],
+            'reserved_at' => ['required', 'date', 'after_or_equal:today'],
             'expired_at' => ['required', 'date', 'after_or_equal:reserved_at'],
         ];
     }

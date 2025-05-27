@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class HomePageController extends Controller
 {

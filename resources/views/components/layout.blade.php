@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="font-playfair overflow-x-hidden">
+<html lang="en" class="bg-pearl-bush-50 font-playfair overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,8 @@
     <a href="/" class="text-cognac-800 @if(request()->is("/")) text-5xl @else text-4xl @endif">Not Fake AirBNB</a>
     <div class="left-1/2 ml-35">
         @if(request()->is('/'))
-            <form method="get" action="search" class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
+            <form method="get" action="search"
+                  class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
                 @csrf
                 <div class="flex flex-col items-start">
                     <label for="city" class="mb-1 font-semibold text-lg">City</label>
@@ -55,24 +56,23 @@
             </form>
         @endif
     </div>
-        <div class="flex flex-row space-x-6">
-            <a href="rent" class="py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 text-3xl">NFAirBNB your
-                house</a>
-            {{--
-            <img src="/images/bb.avif" width="37" class="rounded-4xl">
-            <a href="" class="text-3xl"> Username</a>--}}
-            @guest
-                <div class="flex flex-row py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 space-x-3">
-                    <a href="login" class="text-3xl p">Login</a>
-                </div>
-            @endguest
-            @auth
-                <form action="logout" method="post">
-                    @csrf
-                    <div class="flex flex-row py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 space-x-3">
-                        <button type="submit" class="text-3xl p">Logout</button>
+    <div class="flex flex-row h-17 space-x-6">
+        <a href="{{route('apartment.create')}}"
+           class="px-4 rounded-2xl bg-cognac-800 text-white text-3xl flex items-center">NFAirBNB
+            your
+            house</a>
+        @guest
+            <div class="flex flex-row py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 space-x-3">
+                <a href="{{ route('registered') }}" class="text-3xl flex items-center">Register</a>
+            </div>
+        @endguest
+        @auth
+            <a href="{{ route('userprofile.user', $user = auth()->id())}}"
+               class="text-3xl bg-cognac-800 px-4 py-2 rounded-2xl">
+                <div class="flex flex-row space-x-2 h-full">
+                        <p class="text-white flex items-center">Check profile</p>
                     </div>
-                </form>
+                </a>
             @endauth
         </div>
 </nav>
