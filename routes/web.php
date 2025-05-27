@@ -7,6 +7,18 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('login', function () {
+    return view('login');
+});
+
+Route::get('register', function () {
+    return view('registration');
+});
+
+Route::get('rent', function() {
+    return view('rent');
+});
+
 Route::post('register', [UserController::class, 'authenticate'])->name('registered');
 Route::post('login', [UserController::class, 'login'])->name('authorised');
 Route::post('logout', [UserController::class, 'logout'])->name('user.logout');
