@@ -96,16 +96,21 @@
                 geocoder.geocode({ location: location }, (results, status) => {
                     if (status === "OK" && results[0]) {
                         const components = results[0].address_components;
-                        let street = "";
+                        let route = "";
+                        let streetNumber = "";
                         let city = "";
                         let country = "";
 
                         components.forEach(component => {
                             const types = component.types;
+
                             if (types.includes("route")) {
-                                street = component.long_name;
+                                route = component.long_name;
                             }
-                            if (types.includes("locality") || types.includes("administrative_area_level_2")) {
+                            if (types.includes("street_number")) {
+                                streetNumber = component.long_name;
+                            }
+                            if (types.includes("locality")) {
                                 city = component.long_name;
                             }
                             if (types.includes("country")) {
@@ -113,7 +118,9 @@
                             }
                         });
 
+                        const street = `${route} ${streetNumber}`.trim();
                         const address = `${street}, ${city}, ${country}`;
+
                         document.getElementById("address").value = address;
                         console.log("Address:", address);
                     } else {
