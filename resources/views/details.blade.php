@@ -6,7 +6,7 @@
         <h1 class="text-4xl ml-15 self-center">{{ $apartment->title }}</h1>
         <div class="flex flex-row justify-around px-6 w-2/7 items-center h-20 mb-2">
             @auth
-            @if(auth()->user()->id === $apartment->owner_id)
+            @if(auth()->user()->id === $apartment->owner_id || auth()->user()->admin)
             <form action="/edit/{{$apartment->id}}" method="get">
                 @csrf
                 <button
