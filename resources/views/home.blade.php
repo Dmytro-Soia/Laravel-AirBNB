@@ -10,7 +10,7 @@
                     <h1 class="font-semibold text-center text-5xl">{{ $cities[0]->city }}</h1>
                     @foreach($cities as $MRapartment)
                         <div class="w-full group/MRapartments rounded-3xl">
-                            <a href="detail/{{ $MRapartment->id}}">
+                            <a href="{{ route('apartment.detail', ['apartment' => $MRapartment->id]) }}">
                                 <label for="default-carousel"
                                        class="text-2xl bg-white w-full block rounded-t-3xl pl-6 font-bold">{{ $MRapartment->street }}</label>
                             </a>
@@ -134,7 +134,7 @@
                         </button>
                     </div>
                 </div>
-                <a href="detail/{{ $apartment->id }}">
+                <a href="{{ route('apartment.detail', ['apartment' => $apartment->id]) }}">
                     <p class="text-2xl line-clamp-1 font-bold pl-4">{{ $apartment->country }}, {{ $apartment->city }}</p>
                     <div class="text-wrap text-lg w-full line-clamp-2 h-15 font-normal px-4 break-words">
                         {{ $apartment->description }}
