@@ -10,10 +10,12 @@
                     <h1 class="font-semibold text-center text-5xl">{{ $cities[0]->city }}</h1>
                     @foreach($cities as $MRapartment)
                     <div class="w-full group/MRapartments rounded-3xl">
-                        <label for="qwe" class="text-2xl pl-6 font-bold">{{ $MRapartment->street }}</label>
+                        <a href="detail/{{ $MRapartment->id}}">
+                        <label for="default-carousel" class="text-2xl bg-white w-full block rounded-t-3xl pl-6 font-bold">{{ $MRapartment->street }}</label>
+                        </a>
                         <div id="default-carousel" class="relative w-full" data-carousel="static">
                             <!-- Carousel wrapper -->
-                            <div class="relative w-full h-96 overflow-hidden rounded-3xl z-15 hover:z-14">
+                            <div class="relative w-full h-96 overflow-hidden rounded-b-3xl z-15 hover:z-14">
                                 <!-- Items -->
                                 @foreach($MRapartment->images as $image)
                                     <div class="hidden duration-700 ease-in-out w-full z-14 hover:z-14" data-carousel-item>
