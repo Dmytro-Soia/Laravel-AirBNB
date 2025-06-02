@@ -80,6 +80,8 @@
                                         <h3 class="font-semibold text-cognac-800 w-full">{{ $apartment->title }}</h3>
                                         <p class="text-cognac-700 mt-1">{{ $apartment->price }} CHF/night</p>
                                     </div>
+                                    @auth()
+                                        @if($user->id === auth()->user()->id)
                                     <div class="flex gap-2">
                                         <a href="{{ url('edit/' . $apartment->id) }}"
                                            class="px-3 py-1 bg-pearl-bush-100 text-cognac-800 rounded hover:bg-pearl-bush-200 transition-colors">
@@ -94,6 +96,8 @@
                                             </button>
                                         </form>
                                     </div>
+                                            @endif
+                                    @endauth
                                 </div>
                             </a>
                         </div>
@@ -131,7 +135,7 @@
         @endif
         @endauth
         <div
-            class="min-w-66 max-w-88 bg-cognac-800 text-white p-6 space-y-8 fixed right-0 h-screen">
+            class="min-w-66 max-w-80 bg-cognac-800 text-white p-6 space-y-8 fixed right-0 h-full inset-y-0 mt-25">
             <div class="flex flex-col items-center space-y-4">
                 <div class="w-35 h-35 bg-pearl-bush-100 rounded-full flex items-center justify-center">
                     @if(isset($user->profile_img))
