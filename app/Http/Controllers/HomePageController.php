@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
@@ -16,10 +17,10 @@ class HomePageController extends Controller
             $events = Cache::remember('events_' . strtolower(trim($request->city)), 604800, function () use ($request) {
                 $apiKey = config('services.serp_api.key');
                 $encodedCity = urlencode($request->city);
-                $url = "https://serpapi.com/search.json?engine=google_events&q=Events+in+{$encodedCity}&google_domain=google.com&gl=us&hl=en&api_key=$apiKey";
+                $url = "https://serpapi.com/search.json?engine=google_events&q=Events+in+$encodedCity&google_domain=google.com&gl=us&hl=en&api_key=$apiKey";
                 $response = Http::get($url);
 
-                return array_slice($response->json()['events_results'], 0,8);
+                return Arr::take($response->json()['events_results'], 8);
             });
         }
         $apartments = Apartment::with('images')
