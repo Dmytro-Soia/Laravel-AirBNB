@@ -30,8 +30,8 @@ class StoreApartmentsRequest extends FormRequest
             'price' => ['required', 'integer'],
             'photos' => ['required', 'array', 'min:5'],
             'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
-            'lat' => ['required', 'numeric'],
-            'lon' => ['required', 'numeric'],
+            'lat' => ['required', 'decimal:10,8'],
+            'lon' => ['required', 'decimal:10,8'],
             'address' => ['required'],
         ];
     }

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('country');
             $table->string('city');
             $table->string('street');
-            $table->decimal('lat');
-            $table->decimal('lon');
+            $table->decimal('lat', 9,6);
+            $table->decimal('lon',9,6);
         });
     }
 
