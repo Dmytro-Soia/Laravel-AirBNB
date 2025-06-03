@@ -15,7 +15,8 @@ class HomePageController extends Controller
         if ($request->filled('city')) {
             $events = Cache::remember('events_' . strtolower(trim($request->city)), 604800, function () use ($request) {
                 $apiKey = config('services.serp_api.key');
-                $url = "https://serpapi.com/search.json?engine=google_events&q=Events+in+{$request->city}&google_domain=google.com&gl=us&hl=en&api_key=$apiKey";
+                $encodedCity = urlencode($request->city);
+                $url = "https://serpapi.com/search.json?engine=google_events&q=Events+in+{$encodedCity}&google_domain=google.com&gl=us&hl=en&api_key=$apiKey";
                 $response = Http::get($url);
 
                 return array_slice($response->json()['events_results'], 0,8);
