@@ -1,10 +1,11 @@
+
 <x-layout>
     <x-slot:title>
         Home
     </x-slot:>
     @if(request()->is("/"))
         <h1 class="font-semibold text-center text-8xl mb-20">Most rented locations</h1>
-        <div class="element w-full grid grid-cols-3 place-items-center gap-12 mb-30">
+        <div class="element w-full grid grid-cols-3 place-items-center gap-12 mb-10">
             @foreach($apartmentsMR as $cities)
                 <div class="flex flex-col w-full justify-between space-y-5">
                     <h1 class="font-semibold text-center text-5xl">{{ $cities[0]->city }}</h1>
@@ -12,7 +13,7 @@
                         <div class="w-full group/MRapartments rounded-3xl">
                             <a href="{{ route('apartment.detail', ['apartment' => $MRapartment->id]) }}">
                                 <label for="default-carousel"
-                                       class="text-2xl bg-white w-full block rounded-t-3xl pl-6 font-bold">{{ $MRapartment->street }}</label>
+                                       class="text-3xl bg-white w-full block rounded-t-3xl pl-6 font-bold">{{ $MRapartment->street }}</label>
                             </a>
                             <div id="default-carousel" class="relative w-full" data-carousel="static">
                                 <!-- Carousel wrapper -->
@@ -74,10 +75,53 @@
                 </div>
             @endforeach
         </div>
+        <hr class="mb-10">
+    @elseif(request()->filled('city'))
+        @if($apartments->isEmpty())
+            <div>
+                <h1 class="text-center font-semibold text-6xl mb-16 mt-6 text-gray-800">
+                    We don't have any listings in {{request()->city}} yet, but, you could be the <a href="{{route('apartment.create')}}" class="text-blue-500 hover:text-blue-600">first lessor</a> here!
+                </h1>
+            </div>
+        @else
+            <h1 class="font-bold text-center text-6xl mb-16 mt-6 text-gray-800">
+                Upcoming Events in {{ $apartments[0]->city }}
+            </h1>
+            <div class="grid grid-cols-2 gap-8 px-6 pb-10">
+                @foreach($events as $event)
+                    <div
+                        class="flex bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 overflow-hidden">
+                        <div class="w-45 h-auto">
+                            <img src="{{ $event['image'] }}" alt="Event image"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-2/3 p-4 flex flex-col justify-between space-y-2">
+                            <h2 class="text-2xl font-semibold text-gray-900 line-clamp-1">{{ $event['title'] }}</h2>
+                            <p class="text-gray-600 text-xl line-clamp-1">
+                                <a href="{{ $event['event_location_map']['link'] }}"
+                                   class="text-blue-600 hover:underline">
+                                    {{ $event['address'][0] }}
+                                </a>
+                            </p>
+                            <p class="text-gray-700 text-xl">
+                                <span class="font-medium">Start Date: </span>{{ $event['date']['start_date'] }}</p>
+                            <p class="text-gray-700 text-xl">
+                                <span class="font-xl">More info:</span>
+                                <a href="{{ $event['link'] }}"
+                                   class="text-blue-600 hover:underline">{{ $event['ticket_info'][0]['source'] }}</a>
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <hr class="pb-5">
+        @endif
     @endif
+
     <div class="grid grid-cols-5 gap-18 m-5 pb-20">
         @foreach($apartments as $apartment)
-            <div class="space-y-2 rounded-3xl shadow-block pb-3 group/allApartments h-125">
+            <div
+                class="space-y-2 rounded-3xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 pb-3 group/allApartments h-125">
                 <div id="test-carousel">
                     <div id="default-carousel" class="relative w-full" data-carousel="static">
                         <!-- Carousel wrapper -->
@@ -135,7 +179,8 @@
                     </div>
                 </div>
                 <a href="{{ route('apartment.detail', ['apartment' => $apartment->id]) }}">
-                    <p class="text-2xl line-clamp-1 font-bold pl-4">{{ $apartment->country }}, {{ $apartment->city }}</p>
+                    <p class="text-2xl line-clamp-1 font-bold pl-4">{{ $apartment->country }}
+                        , {{ $apartment->city }}</p>
                     <div class="text-wrap text-lg w-full line-clamp-2 h-15 font-normal px-4 break-words">
                         {{ $apartment->description }}
                     </div>
