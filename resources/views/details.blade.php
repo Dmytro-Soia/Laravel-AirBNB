@@ -92,8 +92,8 @@
                             <p class="text-lg font-semibold text-white">{{jdmonthname($day['displayDate']['month'], 3)}} - {{ $day['displayDate']['day'] }}</p>
                             <img src="{{ $day['daytimeForecast']['weatherCondition']['iconBaseUri'] }}.svg" alt="weather icon" class="mx-auto h-10 my-2">
 
-                            <p class="text-md text-white">Max:: {{ $day['maxTemperature']['degrees'] }}°C</p>
-                            <p class="text-md text-white">Min:: {{ $day['minTemperature']['degrees'] }}°C</p>
+                            <p class="text-md text-white">Max: {{ $day['maxTemperature']['degrees'] }}°C</p>
+                            <p class="text-md text-white">Min: {{ $day['minTemperature']['degrees'] }}°C</p>
                         </div>
                     @endforeach
                 </div>

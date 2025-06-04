@@ -43,7 +43,6 @@ class ApartmentController extends Controller
     {
         $address = explode(', ', $request->address);
 
-        // Create an apartment
         $apartment = new Apartment($request->validated());
         $apartment->country = $address[2];
         $apartment->city = $address[1];
@@ -67,8 +66,7 @@ class ApartmentController extends Controller
     public function detail(Apartment $apartment)
     {
         $weather = Cache::remember('weather_' . strtolower(trim($apartment->city)), 86400, function () use ($apartment) {
-            $apiKey = env('GOOGLE_API_KEY');
-            $encodedCity = urlencode($apartment->city);
+            $apiKey = config('services.google_api.key');
             $url = "https://weather.googleapis.com/v1/forecast/days:lookup?key=$apiKey&location.latitude=$apartment->lat&location.longitude=$apartment->lon&days=4";
             $response = Http::get($url);
 

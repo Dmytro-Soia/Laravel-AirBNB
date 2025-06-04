@@ -37,5 +37,9 @@ return [
 
     'serp_api' => [
         'key' => env('SERP_API_KEY'),
+    ],
+
+    'google_api' => [
+        'key' => env('GOOGLE_API_KEY'),
     ]
 ];
