@@ -83,29 +83,42 @@
 
         </div>
         <div class="row-span-2 h-full ml-10">
-            <form method="get" action="billing/{{ $apartment->id }}"
-                  class="flex shadow-2xl flex-col h-full justify-between items-center bg-pearl-bush-200 border-border-grey w-full rounded-4xl space-x-10">
+            <form method="get" action="{{ route('booking.checkout', ['apartment' => $apartment->id]) }}"
+                  class="flex shadow-2xl flex-col h-full justify-between items-center bg-pearl-bush-200 border border-border-grey w-full rounded-4xl px-8 py-6 space-y-8">
                 @csrf
-                <div class="flex flex-row items-start w-1/2 m-0 p-0 bg-cognac-800 justify-center h-100 rounded-2xl mt-5">
-                    <div class="flex flex-col w-8/10 items-center mt-5">
-                    <input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
+                <div class="flex flex-row bg-cognac-800 rounded-2xl gap-4 text-center">
+                    @foreach($weather['forecastDays'] as $day)
+                        <div class="flex flex-col  p-4">
+                            <p class="text-lg font-semibold text-white">{{jdmonthname($day['displayDate']['month'], 3)}} - {{ $day['displayDate']['day'] }}</p>
+                            <img src="{{ $day['daytimeForecast']['weatherCondition']['iconBaseUri'] }}.svg" alt="weather icon" class="mx-auto h-10 my-2">
+
+                            <p class="text-md text-white">Max:: {{ $day['maxTemperature']['degrees'] }}°C</p>
+                            <p class="text-md text-white">Min:: {{ $day['minTemperature']['degrees'] }}°C</p>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="flex flex-row items-start w-2/3 m-0 p-0 bg-cognac-800 justify-center h-100 rounded-2xl mt-5">
+                    <div class="flex flex-col w-4/5 items-center mt-5"><input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
                     </div>
                 </div>
-
-                <div class="flex flex-col space-y-10 px-6 py-4 w-full items-start">
-                    <p class="text-start text-white pl-5 text-2xl underline underline-offset-5 rounded-2xl bg-cognac-800 w-full h-30 pt-2">
-                        {{$apartment->price }} CHF per night<br><br>Developer fee: 100 CHF</p>
+                <div class="w-full bg-cognac-800 text-white rounded-2xl p-5 text-left">
+                    <p class="text-2xl underline underline-offset-4">CHF {{ $apartment->price }} per night</p>
+                    <p class="text-lg mt-2">Developer fee: <strong>100 CHF</strong></p>
+                </div>
+                <div class="flex flex-col w-full">
+                    <label for="guest_number" class="text-lg font-semibold text-cognac-800 mb-2">Number of Guests</label>
                     <input type="number"
                            name="guest_number"
                            required
-                           class="w-full transition-all border-border-grey focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-2xl "
-                           placeholder="Number of guests" min="1" max="{{$apartment->max_people}}"
-                    >
-                    <button
-                        class="w-full text-2xl mt-85 h-20 rounded-3xl bg-cognac-800 hover:bg-cognac-900 transition-colors text-white"
-                        type="submit">Checkout billing information
-                    </button>
+                           placeholder="Number of guests"
+                           min="1" max="{{ $apartment->max_people }}"
+                           class="w-full rounded-2xl py-2 px-4 border border-border-grey focus:ring-2 focus:ring-cognac-800 focus:outline-none transition-all text-xl">
                 </div>
+                <button
+                    type="submit"
+                    class="w-full text-2xl py-4 rounded-3xl bg-cognac-800 hover:bg-cognac-900 text-white transition-colors">
+                    Checkout Billing Information
+                </button>
             </form>
         </div>
         <div class="w-full">

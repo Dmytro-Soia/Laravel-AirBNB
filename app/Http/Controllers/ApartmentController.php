@@ -9,8 +9,10 @@ use App\Models\Booking;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -64,8 +66,17 @@ class ApartmentController extends Controller
 
     public function detail(Apartment $apartment)
     {
+        $weather = Cache::remember('weather_' . strtolower(trim($apartment->city)), 86400, function () use ($apartment) {
+            $apiKey = env('GOOGLE_API_KEY');
+            $encodedCity = urlencode($apartment->city);
+            $url = "https://weather.googleapis.com/v1/forecast/days:lookup?key=$apiKey&location.latitude=$apartment->lat&location.longitude=$apartment->lon&days=4";
+            $response = Http::get($url);
+
+            return $response->json();
+        });
+
         $existedBookings = Booking::where('apartment_id', $apartment->id)->get();
-        return view('details', ['apartment' => $apartment, 'bookings' => $existedBookings]);
+        return view('details', ['apartment' => $apartment, 'bookings' => $existedBookings, 'weather' => $weather]);
     }
 
     public function delete(Apartment $apartment)
