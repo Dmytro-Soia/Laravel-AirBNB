@@ -7,14 +7,13 @@ use App\Http\Requests\UpdateApartmentsRequest;
 use App\Models\Apartment;
 use App\Models\Booking;
 use App\Models\Image;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -72,9 +71,17 @@ class ApartmentController extends Controller
 
             return $response->json();
         });
-
+        $days = [];
+        foreach ($weather['forecastDays'] as $day) {
+            $date = Carbon::create($day['interval']['startTime']);
+            $days[] = $date->rawFormat('F, l-j');
+        }
         $existedBookings = Booking::where('apartment_id', $apartment->id)->get();
-        return view('details', ['apartment' => $apartment, 'bookings' => $existedBookings, 'weather' => $weather]);
+        return view('details', [
+            'apartment' => $apartment,
+            'bookings' => $existedBookings,
+            'weather' => $weather,
+            'days' => $days]);
     }
 
     public function delete(Apartment $apartment)

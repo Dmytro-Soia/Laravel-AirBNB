@@ -31,6 +31,8 @@ accounts, apartment listings and bookings. Admins have additional privileges to 
 - APIs & Libraries:
   - Google Maps JavaScript API: map rendering and user interaction
   - Geocoding API: address-to coordinate and coordinate-to-address conversion
+  - Google Weather API: real-time weather forecast based on apartment location
+  - SerpApi(Google Events): fetch local events in a searched city
   - Flowbite: tailwind-based UI component library
   - Flatpickr: lightweight date/time picker
 
