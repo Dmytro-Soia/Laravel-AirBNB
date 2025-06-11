@@ -2,8 +2,8 @@
     <x-slot:title>
         Rooms
     </x-slot:title>
-    <div class="flex justify-between">
-        <h1 class="text-4xl ml-15 self-center">{{ $apartment->title }}</h1>
+    <div class="flex justify-between overflow-y-hidden">
+        <h1 class="text-4xl ml-15 self-center">{{ $apartment->title }} in {{ $apartment->city }}, {{ $apartment->street }}</h1>
         <div class="flex flex-row justify-around px-6 w-2/7 items-center h-20 mb-2">
             @auth
             @if(auth()->user()->id === $apartment->owner_id || auth()->user()->admin)
@@ -25,7 +25,7 @@
             @endauth
         </div>
     </div>
-    <div class="grid grid-cols-[70%_30%] grid-rows-2h-full">
+    <div class="grid grid-cols-[70%_30%] h-9/10 grid-rows-2">
         <div id="test-carousel" class="h-4/5 mx-10">
             <div id="default-carousel" class="relative" data-carousel="static">
                 <!-- Carousel wrapper -->
@@ -62,7 +62,6 @@
                                           stroke-width="2"
                                           d="M5 1 1 5l4 4"/>
                                 </svg>
-                                <span class="sr-only">Previous</span>
                             </span>
                 </button>
                 <button type="button"
@@ -76,7 +75,6 @@
                                           stroke-width="2"
                                           d="m1 9 4-4-4-4"/>
                                 </svg>
-                                <span class="sr-only">Next</span>
                             </span>
                 </button>
             </div>
@@ -88,8 +86,8 @@
                 @csrf
                 <div class="flex flex-row bg-cognac-800 rounded-2xl gap-4 text-center">
                     @foreach($weather['forecastDays'] as $day)
-                        <div class="flex flex-col  p-4">
-                            <p class="text-lg font-semibold text-white">{{jdmonthname($day['displayDate']['month'], 3)}} - {{ $day['displayDate']['day'] }}</p>
+                        <div class="flex flex-col p-3">
+                            <p class="text-lg font-semibold text-white">{{ $days[$loop->index] }}</p>
                             <img src="{{ $day['daytimeForecast']['weatherCondition']['iconBaseUri'] }}.svg" alt="weather icon" class="mx-auto h-10 my-2">
 
                             <p class="text-md text-white">Max: {{ $day['maxTemperature']['degrees'] }}°C</p>
@@ -121,9 +119,9 @@
                 </button>
             </form>
         </div>
-        <div class="w-full">
+        <div class="w-full mt-55">
             <textarea rows="10" disabled
-                      class="pl-5 resize-none mt-10 w-full text-lg rounded-2xl ring-2 ring-cognac-800 pr-5">{{$apartment->description}}</textarea>
+                      class="pl-5 resize-none mt-10 w-full text-xl rounded-2xl ring-2 ring-cognac-800 pr-5">{{$apartment->description}}</textarea>
         </div>
     </div>
     <script>
