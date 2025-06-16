@@ -58,7 +58,7 @@ accounts, apartment listings and bookings. Admins have additional privileges to 
 6) Create ".env" file from ".env.example" and generate an application key:
    ```bash
    cp .env.example .env
-   .vendor/bin/sail artisan key:generate
+   ./vendor/bin/sail artisan key:generate
    ```
 7) Add needed API keys to ".env":
    - [Google API](https://console.cloud.google.com/apis/library?inv=1&invt=Ab0Qtw)(Create account, generate API and activate: Geocoding API, Maps JavaScript API, Weather API)
