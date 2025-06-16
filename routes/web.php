@@ -15,7 +15,7 @@ Route::get('register', function () {
     return view('registration');
 });
 
-Route::get('rent', function() {
+Route::get('rent', function () {
     return view('rent');
 });
 

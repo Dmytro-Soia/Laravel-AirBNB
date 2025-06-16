@@ -2,9 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Apartment;
 use App\Models\Booking;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -53,16 +53,26 @@ accounts, apartment listings and bookings. Admins have additional privileges to 
    ```
 5) Run Docker-container with the application:
    ```bash
-   ./vendor/bin/sail up
+   ./vendor/bin/sail up -d
    ```
-6) Install JavaScript dependencies:
+6) Create ".env" file from ".env.example" and generate an application key:
+   ```bash
+   cp .env.example .env
+   ./vendor/bin/sail artisan key:generate
+   ```
+7) Add needed API keys to ".env":
+   - [Google API](https://console.cloud.google.com/apis/library?inv=1&invt=Ab0Qtw)(Create account, generate API and activate: Geocoding API, Maps JavaScript API, Weather API)
+   - [SerpApi](https://serpapi.com/)(Create account and generate API key)
+
+
+8) Install JavaScript dependencies:
    ```bash
    npm install
    npm run dev
    ```
-7) Run database migrations:
+9) Run database migrations:
    ```bash
    ./vendor/bin/sail artisan migrate
    ```
-8) Open web-application in a browser:
+10) Open web-application in a browser:
    http://localhost/
