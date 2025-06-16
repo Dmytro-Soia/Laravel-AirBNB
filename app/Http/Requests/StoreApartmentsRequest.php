@@ -23,8 +23,8 @@ class StoreApartmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:300'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string','max:400'],
             'rooms' => ['required', 'integer'],
             'max_people' => ['required', 'integer'],
             'price' => ['required', 'integer'],
@@ -32,17 +32,9 @@ class StoreApartmentsRequest extends FormRequest
             'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
             'lat' => ['required', 'decimal:12,18'],
             'lon' => ['required', 'decimal:12,18'],
-            'address' => ['required'],
+            'street' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'country' => ['required', 'string'],
         ];
-    }
-
-    protected function prepareForValidation()
-    {
-        $address = explode(', ', $this->request->get('address'));
-        $this->merge([
-            'country' => $address[0],
-            'city' => $address[1],
-            'street' => $address[2],
-        ]);
     }
 }

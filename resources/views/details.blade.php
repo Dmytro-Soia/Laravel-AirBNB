@@ -29,7 +29,7 @@
         <div id="test-carousel" class="h-4/5 mx-10">
             <div id="default-carousel" class="relative" data-carousel="static">
                 <!-- Carousel wrapper -->
-                <div class="relative h-200 z-10 overflow-hidden rounded-3xl">
+                <div class="relative h-215 z-10 overflow-hidden rounded-3xl">
                     <!-- Item 1 -->
                     @foreach($apartment->images as $image)
                         <div class="hidden duration-700 ease-in-out z-14 hover:z-14" data-carousel-item>
@@ -95,15 +95,16 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="flex flex-row items-start w-2/3 m-0 p-0 bg-cognac-800 justify-center h-100 rounded-2xl mt-5">
-                    <div class="flex flex-col w-4/5 items-center mt-5"><input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
+                <div class="flex flex-row items-start w-6/7 m-0 p-0 bg-cognac-800 justify-center h-100 rounded-2xl">
+                    <div class="flex flex-col w-4/5 items-center mt-5">
+                        <input name="dates" id="dates" required type="date" class="w-full rounded-xl text-2xl text-center">
                     </div>
                 </div>
-                <div class="w-full bg-cognac-800 text-white rounded-2xl p-5 text-left">
+                <div class="w-6/7 bg-cognac-800 text-white rounded-2xl p-5 text-left">
                     <p class="text-2xl underline underline-offset-4">CHF {{ $apartment->price }} per night</p>
                     <p class="text-lg mt-2">Developer fee: <strong>100 CHF</strong></p>
                 </div>
-                <div class="flex flex-col w-full">
+                <div class="flex flex-col w-6/7">
                     <label for="guest_number" class="text-lg font-semibold text-cognac-800 mb-2">Number of Guests</label>
                     <input type="number"
                            name="guest_number"
@@ -114,13 +115,13 @@
                 </div>
                 <button
                     type="submit"
-                    class="w-full text-2xl py-4 rounded-3xl bg-cognac-800 hover:bg-cognac-900 text-white transition-colors">
+                    class="w-6/7 text-2xl py-4 rounded-3xl bg-cognac-800 hover:bg-cognac-900 text-white transition-colors">
                     Checkout Billing Information
                 </button>
             </form>
         </div>
-        <div class="w-full mt-55">
-            <textarea rows="10" disabled
+        <div class="w-full mt-75">
+            <textarea rows="7" disabled
                       class="pl-5 resize-none mt-10 w-full text-xl rounded-2xl ring-2 ring-cognac-800 pr-5">{{$apartment->description}}</textarea>
         </div>
     </div>

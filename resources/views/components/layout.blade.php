@@ -15,35 +15,35 @@
     <title>{{ $title }}</title>
 </head>
 <body class="h-dvh relative">
-<nav class="bg-pearl-bush-200 flex flex-row items-center px-6 py-4 fixed w-full justify-between z-20">
-    <a href="/" class="text-cognac-800 @if(request()->is("/")) text-5xl @else text-4xl @endif">Not Fake AirBNB</a>
+<nav class="bg-pearl-bush-200 flex flex-row items-center px-6 py-4 fixed w-full h-35 justify-between z-20">
+    <a href="/" class="text-cognac-800 text-[40px]">Not Fake AirBNB</a>
     <div class="left-1/2 ml-35">
         @if(request()->is('/'))
             <form method="get" action="{{ route('apartment.search') }}"
                   class="flex gap-6 rounded-2xl px-4 py-3 bg-pearl-bush-100 text-black shadow-lg">
                 @csrf
                 <div class="flex flex-col items-start">
-                    <label for="city" class="mb-1 font-semibold text-lg">City</label>
+                    <label for="city" class="mb-1 font-semibold text-2xl">City</label>
                     <input type="text" name="city" placeholder="Rome" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="min_price" class="mb-1 font-semibold text-lg">Min Price</label>
+                    <label for="min_price" class="mb-1 font-semibold text-2xl">Min Price</label>
                     <input type="number" name="min_price" placeholder="0" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="max_price" class="mb-1 font-semibold text-lg">Max Price</label>
+                    <label for="max_price" class="mb-1 font-semibold text-2xl">Max Price</label>
                     <input type="number" name="max_price" placeholder="0" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="rooms" class="mb-1 font-semibold text-lg">Rooms</label>
+                    <label for="rooms" class="mb-1 font-semibold text-2xl">Rooms</label>
                     <input type="number" name="rooms" placeholder="0" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <label for="persons" class="mb-1 font-semibold text-lg">Persons</label>
+                    <label for="persons" class="mb-1 font-semibold text-2xl">Persons</label>
                     <input type="number" name="persons" placeholder="0" min="0"
                            class="border border-gray-500 transition-colors focus:ring-2 focus:ring-cognac-800 focus:outline-none rounded-md px-2 py-1 w-28"/>
                 </div>
@@ -60,16 +60,16 @@
         @auth
         @if(auth()->user()->admin)
             <a href="{{route('adminpanel')}}"
-               class="px-4 rounded-2xl bg-cognac-800 text-white text-3xl flex items-center">Admin panel</a>
+               class="px-8 rounded-2xl bg-cognac-800 text-white text-[30px] flex items-center">Admin panel</a>
         @endif
         @endauth
         <a href="{{route('apartment.create')}}"
-           class="px-4 rounded-2xl bg-cognac-800 text-white text-3xl flex items-center">NFAirBNB
+           class="px-8 rounded-2xl bg-cognac-800 text-white text-[30px] flex items-center">NFAirBNB
             your
             house</a>
         @guest
             <div class="flex flex-row py-2 px-4 rounded-2xl bg-cognac-800 text-pearl-bush-200 space-x-3">
-                <a href="{{ route('registered') }}" class="text-3xl flex items-center">Register</a>
+                <a href="{{ route('registered') }}" class="text-[30px] flex items-center">Register</a>
             </div>
         @endguest
         @auth
@@ -79,14 +79,14 @@
                     @if(auth()->user()->profile_img)
                     <img src="{{ '/storage/images/' . auth()->user()->profile_img }}" class="rounded-full w-14 h-14">
                     @endif
-                        <p class="text-white flex items-center">{{auth()->user()->name}}</p>
+                        <p class="text-white flex items-center text-4xl">{{auth()->user()->name}}</p>
                     </div>
                 </a>
             @endauth
         </div>
 </nav>
 
-<div class=" h-screen @if(request()->is("/")) pt-35  @else pt-24 @endif px-12">
+<div class="h-screen pt-37 px-12">
     @if ($errors->any())
         <div class="flex flex-col px-4 py-2 bg-cognac-700 rounded-2xl ">
             <ul class="space-y-1 px-2 py-2">
