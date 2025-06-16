@@ -33,7 +33,7 @@ class ApartmentController extends Controller
 
             $allApartments[$city] = $apartments;
         }
-        $apartments = Apartment::with('images')->orderBy('created_at','desc')->get();
+        $apartments = Apartment::with('images')->orderBy('created_at', 'desc')->get();
 
         return view('home', ['apartmentsMR' => $allApartments, 'apartments' => $apartments]);
     }
@@ -45,8 +45,7 @@ class ApartmentController extends Controller
         $apartment->owner()->associate(Auth::user());
         $apartment->save();
 
-        foreach ($request->file('photos') as $photo)
-        {
+        foreach ($request->file('photos') as $photo) {
             $path = Storage::disk('public')->putFile('images', $photo);
             $image = new Image([
                 'path' => $path
@@ -82,8 +81,7 @@ class ApartmentController extends Controller
     {
         Gate::authorize('user_is_owner', $apartment);
         $containedImages = Image::where('apartment_id', $apartment->id)->get();
-        foreach($containedImages as $image)
-        {
+        foreach ($containedImages as $image) {
             Storage::disk('public')->delete('images/' . $image->path);
             $image->delete();
         }
@@ -92,7 +90,7 @@ class ApartmentController extends Controller
         return redirect('/');
     }
 
-    public function edit_index(Apartment $apartment )
+    public function edit_index(Apartment $apartment)
     {
         Gate::authorize('user_is_owner', $apartment);
         return view('edit', ['editApartment' => $apartment]);
@@ -107,21 +105,19 @@ class ApartmentController extends Controller
 
         $apartment->save();
 
-    if($request->hasFile('photos')) {
-        foreach($apartment->images as $image)
-        {
-            Storage::disk('public')->delete('images/' . $image->path);
+        if ($request->hasFile('photos')) {
+            foreach ($apartment->images as $image) {
+                Storage::disk('public')->delete('images/' . $image->path);
+            }
+            $apartment->images()->delete();
+            foreach ($request->file('photos') as $photo) {
+                $path = Storage::disk('public')->putFile('images', $photo);
+                $image = new Image([
+                    'path' => $path
+                ]);
+                $apartment->images()->save($image);
+            }
         }
-        $apartment->images()->delete();
-        foreach ($request->file('photos') as $photo)
-        {
-            $path = Storage::disk('public')->putFile('images', $photo);
-            $image = new Image([
-                'path' => $path
-            ]);
-            $apartment->images()->save($image);
-        }
-    }
         return redirect('/');
     }
 }

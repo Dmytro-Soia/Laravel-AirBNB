@@ -6,7 +6,6 @@ use App\Http\Requests\CheckoutRequest;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Apartment;
 use App\Models\Booking;
-
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
@@ -21,10 +20,10 @@ class BookingController extends Controller
         return view('/billing', ['checkout' => $apartment, 'totalCost' => $totalCost]);
     }
 
-    public function booking (StoreBookingRequest $request, Apartment $apartment)
+    public function booking(StoreBookingRequest $request, Apartment $apartment)
     {
         $totalCost = $apartment->calculatePrice(Booking::daysDifference(session('dateFrom'), session('dateTo')));
-        if($totalCost != $request->totalCost){
+        if ($totalCost != $request->totalCost) {
             return redirect()->back()->withErrors(['message' => 'Difference between total costs!']);
         }
         $booking = new Booking([

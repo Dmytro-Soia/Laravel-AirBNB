@@ -6,7 +6,6 @@ use App\Models\Apartment;
 use App\Models\Booking;
 use App\Models\Image;
 use App\Models\User;
-use Database\Factories\ImageFactory;
 use Illuminate\Database\Seeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,15 +29,15 @@ class DatabaseSeeder extends Seeder
                 ->has(Image::factory()->count(5))
                 ->count(5))
             ->create();
-//
-//        $users = User::all();
-//        $apartments = Apartment::all();
-//
-//        $users->each(function ($user) use ($apartments) {
-//            Booking::factory()
-//                ->for($user, 'tenant')
-//                ->for($apartments->random(), 'apartment')
-//                ->create();
-//        });
+        //
+        //        $users = User::all();
+        //        $apartments = Apartment::all();
+        //
+        //        $users->each(function ($user) use ($apartments) {
+        //            Booking::factory()
+        //                ->for($user, 'tenant')
+        //                ->for($apartments->random(), 'apartment')
+        //                ->create();
+        //        });
     }
 }

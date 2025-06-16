@@ -24,11 +24,11 @@ class HomePageController extends Controller
             });
         }
         $apartments = Apartment::with('images')
-            ->when($request->city, fn($query)=>$query->where('city', '=', request('city')))
-            ->when($request->min_price, fn($query)=>$query->where('price', '>=', request('min_price')))
-            ->when($request->max_price, fn($query)=>$query->where('price', '<=', request('max_price')))
-            ->when($request->rooms, fn($query)=>$query->where('rooms', '>=', request('rooms')))
-            ->when($request->persons, fn($query)=>$query->where('max_people', '>=', request('persons')))->orderBy('created_at', 'desc')->get();
+            ->when($request->city, fn ($query) => $query->where('city', '=', request('city')))
+            ->when($request->min_price, fn ($query) => $query->where('price', '>=', request('min_price')))
+            ->when($request->max_price, fn ($query) => $query->where('price', '<=', request('max_price')))
+            ->when($request->rooms, fn ($query) => $query->where('rooms', '>=', request('rooms')))
+            ->when($request->persons, fn ($query) => $query->where('max_people', '>=', request('persons')))->orderBy('created_at', 'desc')->get();
 
         return view('home', ['apartments' => $apartments, 'events' => $events]);
     }

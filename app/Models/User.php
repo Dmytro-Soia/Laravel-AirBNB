@@ -13,7 +13,8 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -60,7 +61,8 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'tenant_id');
     }
 
-    public static function saveImg($file, $user) {
+    public static function saveImg($file, $user)
+    {
         $imgName = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
         Storage::disk('public')->putFileAs('images', $file, $imgName);
         $user->profile_img = $imgName;
