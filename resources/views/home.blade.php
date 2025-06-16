@@ -99,8 +99,8 @@
                     <div
                         class="flex bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 overflow-hidden">
                         <div class="w-45 h-auto">
-                            <img src="@if(isset($events['image']))
-                             {{ $events['image'] }}
+                            <img src="@if(isset($event['image']))
+                             {{ $event['image'] }}
                             @else
                             {{ $event['thumbnail'] }}
                             @endif"

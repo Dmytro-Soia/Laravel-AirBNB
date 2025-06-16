@@ -120,7 +120,7 @@
                             }
                         });
 
-                         if(route === "" || null) {
+                         if (route === "" || route == null) {
                              return console.error("Undefined street:(")
                          }
 

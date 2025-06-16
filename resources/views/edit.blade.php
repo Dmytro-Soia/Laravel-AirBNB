@@ -41,8 +41,8 @@
                 <div id="map" class="h-117 hover:ring-2 hover:ring-cognac-800 transition-all rounded-2xl"></div>
                 <input type="hidden" name="lat" value="{{$editApartment->lat}}" id="latitude" required>
                 <input type="hidden" name="lon" value="{{$editApartment->lon}}" id="longitude" required>
-                <input type="hidden" name="street" {{$editApartment->street}} id="street" required>
-                <input type="hidden" name="city" {{$editApartment->city}} id="city" required>
+                <input type="hidden" name="street" value="{{$editApartment->street}}" id="street" required>
+                <input type="hidden" name="city" value="{{$editApartment->city}}" id="city" required>
                 <input type="hidden" name="country" value="{{$editApartment->country}}" id="country" required>
             </div>
 
