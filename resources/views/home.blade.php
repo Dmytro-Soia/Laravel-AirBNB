@@ -10,14 +10,14 @@
                 <div class="flex flex-col w-full justify-between space-y-5">
                     <h1 class="font-semibold text-center text-5xl">{{ $cities[0]->city }}</h1>
                     @foreach($cities as $MRapartment)
-                        <div class="w-full group/MRapartments rounded-3xl">
+                        <div class="bg-white pb-3 w-full group/MRapartments rounded-3xl">
                             <a href="{{ route('apartment.detail', ['apartment' => $MRapartment->id]) }}">
                                 <label for="default-carousel"
                                        class="text-3xl bg-white w-full block rounded-t-3xl pl-6 font-bold">{{ $MRapartment->street }}</label>
                             </a>
                             <div id="default-carousel" class="relative w-full" data-carousel="static">
                                 <!-- Carousel wrapper -->
-                                <div class="relative w-full h-96 overflow-hidden rounded-b-3xl z-15 hover:z-14">
+                                <div class="relative w-full h-96 overflow-hidden z-15 hover:z-14">
                                     <!-- Items -->
                                     @foreach($MRapartment->images as $image)
                                         <div class="hidden duration-700 ease-in-out w-full z-14 hover:z-14"
@@ -70,6 +70,13 @@
                             </span>
                                 </button>
                             </div>
+                            <a class="mb-5" href="{{ route('apartment.detail', ['apartment' => $MRapartment->id]) }}">
+                                <div class="text-wrap text-xl w-full line-clamp-1 h-8 mt-2 font-normal px-4">
+                                    {{ $MRapartment->description }}
+                                </div>
+                                <p class="text-xl font-bold pl-4 underline">{{ $MRapartment->price }} CHF <span
+                                        class="font-extralight">night</span></p>
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -92,7 +99,14 @@
                     <div
                         class="flex bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 overflow-hidden">
                         <div class="w-45 h-auto">
-                            <img src="{{ $event['image'] }}" alt="Event image"
+                            <img src="@if(isset($event['image']))
+                             {{ $event['image'] }}
+                            @else
+                            {{ $event['thumbnail'] }}
+                            @endif"
+
+
+                                     alt="Event image"
                                  class="w-full h-full object-cover">
                         </div>
                         <div class="w-2/3 p-4 flex flex-col justify-between space-y-2">
@@ -121,7 +135,7 @@
     <div class="grid grid-cols-5 gap-18 m-5 pb-20">
         @foreach($apartments as $apartment)
             <div
-                class="space-y-2 rounded-3xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 pb-3 group/allApartments h-125">
+                class="h-118 space-y-2 rounded-3xl shadow-md hover:shadow-xl hover:scale-101 transition-all duration-300 pb-3 group/allApartments">
                 <div id="test-carousel">
                     <div id="default-carousel" class="relative w-full" data-carousel="static">
                         <!-- Carousel wrapper -->

@@ -41,7 +41,9 @@
                 <div id="map" class="h-117 hover:ring-2 hover:ring-cognac-800 transition-all rounded-2xl"></div>
                 <input type="hidden" name="lat" id="latitude" required>
                 <input type="hidden" name="lon" id="longitude" required>
-                <input type="hidden" name="address" id="address" required>
+                <input type="hidden" name="street" id="street" required>
+                <input type="hidden" name="city" id="city" required>
+                <input type="hidden" name="country" id="country" required>
             </div>
 
             <div class="md:col-span-1 xl:col-span-2">
@@ -118,11 +120,15 @@
                             }
                         });
 
-                        const street = `${route} ${streetNumber}`.trim();
-                        const address = `${street}, ${city}, ${country}`;
+                         if (route === "" || route == null) {
+                             return console.error("Undefined street:(")
+                         }
 
-                        document.getElementById("address").value = address;
-                        console.log("Address:", address);
+                        const street = `${route} ${streetNumber}`.trim();
+
+                        document.getElementById("street").value = `${street}`;
+                        document.getElementById("city").value = `${city}`;
+                        document.getElementById("country").value = `${country}`;
                     } else {
                         console.error("Geocoder failed:", status);
                     }

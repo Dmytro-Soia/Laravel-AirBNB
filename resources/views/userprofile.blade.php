@@ -19,7 +19,7 @@
                 </div>
                 <div class="grid grid-cols-3 gap-8">
                     @foreach($apartments as $apartment)
-                        <div id="default-carousel" class="relative hover:shadow-md rounded-3xl bg-white group"
+                        <div id="default-carousel" class="relative w-9/10 hover:shadow-md rounded-3xl bg-white group"
                              data-carousel="static">
                             <!-- Carousel wrapper -->
                             <div class="relative h-96 overflow-hidden rounded-t-3xl z-15 hover:z-14">
@@ -28,7 +28,7 @@
                                     <div class="hidden duration-700 ease-in-out z-14 group-hover:z-14"
                                          data-carousel-item>
                                         <img src="{{ url('storage/' . $image->path) }}"
-                                             class="absolute block w-full h-96 object-cover"
+                                             class="absolute w-full block h-96 object-cover"
                                              alt="Carousel image">
                                     </div>
                                 @endforeach
@@ -108,7 +108,7 @@
             @if($user->id === auth()->user()->id)
                 <section id="bookings" class="w-9/10">
                     <h2 class="text-2xl font-bold text-cognac-800 mb-6 ml-6">My Bookings</h2>
-                    <div class="space-y-4">
+                    <div class="space-y-4 w-29/30">
                         @foreach($bookings as $booking)
                             <div class="bg-white rounded-xl p-4 hover:shadow-md transition-shadow mb-3">
                                 <a href="{{ url('detail/' . $booking->apartment_id) }}">
@@ -151,7 +151,7 @@
                 </div>
             </div>
 
-            <nav class="space-y-2">
+            <nav class="mt-5 space-y-2">
                 @auth
                 @if($user->id === auth()->user()->id)
                     <a href="#properties" class="block px-4 py-2 rounded-lg hover:bg-cognac-900 transition">

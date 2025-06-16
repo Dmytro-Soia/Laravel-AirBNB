@@ -40,15 +40,9 @@ class ApartmentController extends Controller
 
     public function create(StoreApartmentsRequest $request)
     {
-        $address = explode(', ', $request->address);
-
         $apartment = new Apartment($request->validated());
-        $apartment->country = $address[2];
-        $apartment->city = $address[1];
-        $apartment->street = $address[0];
 
         $apartment->owner()->associate(Auth::user());
-
         $apartment->save();
 
         foreach ($request->file('photos') as $photo)
@@ -74,7 +68,7 @@ class ApartmentController extends Controller
         $days = [];
         foreach ($weather['forecastDays'] as $day) {
             $date = Carbon::create($day['interval']['startTime']);
-            $days[] = $date->rawFormat('F, l-j');
+            $days[] = $date->rawFormat('F l-j');
         }
         $existedBookings = Booking::where('apartment_id', $apartment->id)->get();
         return view('details', [
@@ -110,9 +104,6 @@ class ApartmentController extends Controller
         $address = explode(', ', $request->address);
 
         $apartment->fill($request->validated());
-        $apartment->country = $address[2];
-        $apartment->city = $address[1];
-        $apartment->street = $address[0];
 
         $apartment->save();
 
